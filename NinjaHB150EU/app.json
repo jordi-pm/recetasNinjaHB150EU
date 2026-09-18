@@ -14,7 +14,7 @@
       "infoPlist": {
         "CFBundleDisplayName": "Sopera"
       },
-      "buildNumber": "1",
+      "buildNumber": "2",
       "config": {
         "usesNonExemptEncryption": false
       }
@@ -53,6 +53,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8e52afbd-0964-47a6-a279-0d4b582c2029"
+      }
     }
   }
 }
