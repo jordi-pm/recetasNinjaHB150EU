@@ -115,10 +115,10 @@ export default function Maquina() {
           ))}
         </Card>
 
-        <SectionTitle style={styles.st}>Discrepancias entre fuentes</SectionTitle>
+        <SectionTitle style={styles.st}>Cosas que conviene comprobar</SectionTitle>
         <Card style={styles.pad}>
           <Text style={[styles.body, { color: c.muted }]}>
-            Contradicciones reales encontradas al montar la app. Se señalan, no se resuelven por cuenta propia.
+            Detalles que cambian de un modelo a otro. Los señalamos para que los mires en tu aparato en vez de darlos por hechos.
           </Text>
           {MAQUINA.discrepancias.map((d: any) => (
             <View key={d.t} style={{ marginTop: 12 }}>

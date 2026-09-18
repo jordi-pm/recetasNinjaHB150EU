@@ -126,7 +126,7 @@ export default function RecetaDetalle() {
 
         {r.discrepancia ? (
           <View style={{ marginTop: 12 }}>
-            <Callout tone="warn" title="⚠️ Discrepancia en la fuente oficial">{r.discrepancia}</Callout>
+            <Callout tone="warn" title="⚠️ Léelo antes de empezar">{r.discrepancia}</Callout>
           </View>
         ) : null}
 

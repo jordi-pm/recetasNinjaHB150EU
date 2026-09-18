@@ -267,7 +267,7 @@ export function useApp() {
   return c;
 }
 
-/** Todas las recetas: las oficiales más las tuyas. */
+/** Todas las recetas: las que trae la app más las tuyas. */
 export function useRecetas(): Receta[] {
   const { propias } = useApp();
   const { RECETAS } = require('@/data/recetas') as { RECETAS: Receta[] };

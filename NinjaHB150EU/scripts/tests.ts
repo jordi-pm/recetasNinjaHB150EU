@@ -142,6 +142,13 @@ test('cada receta declara al menos un programa', () => {
   }
 });
 
+test('la app no se atribuye fuentes oficiales', () => {
+  const texto = JSON.stringify(RECETAS) + JSON.stringify(MAQUINA);
+  for (const palabra of ['Ninja', 'Foodi', 'Auto-iQ', 'HB150', 'SharkNinja', 'oficial']) {
+    assert.ok(!texto.includes(palabra), `los datos mencionan «${palabra}»`);
+  }
+});
+
 test('las recetas con discrepancia la explican', () => {
   for (const r of RECETAS) {
     if (r.discrepancia) assert.ok(r.discrepancia.length > 40, `${r.id}: discrepancia demasiado escueta`);

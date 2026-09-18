@@ -339,11 +339,11 @@ export const RECETAS: Receta[] = [
     { b: 'CHUNKY SOUP', t: 'Coloca la tapa y reinicia el programa.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
-  discrepancia: 'La receta oficial tiene incoherencias: la lista de ingredientes incluye apio y zanahoria que no aparecen en los pasos; los pasos mencionan aceite de oliva sin darlo en la lista, y piden añadir “garbanzos” que tampoco figuran en la lista. Aquí se reproduce tal cual, sin inventar cantidades: usa el aceite que necesites para el sofrito y omite los garbanzos, o añádelos junto a las alubias bajo tu criterio.'
+  discrepancia: 'Esta receta tiene dos cabos sueltos que preferimos dejar a la vista: el apio y la zanahoria están en la lista pero ningún paso dice cuándo entran, y el aceite del sofrito no lleva cantidad. Échale el aceite que te pida el sofrito y mete el apio y la zanahoria con el resto de la verdura.'
 },
 {
   id: 'plantilla-trozos', cat: 'sopas',
-  nombre: 'Plantilla oficial: sopa con trozos a tu gusto',
+  nombre: 'Plantilla: sopa con trozos a tu gusto',
   raciones: '3-4', racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & CHUNKY SOUP',
   principal: 'a elegir', tags: ['trozos'], plantilla: true,
   limiteMl: 1400,
@@ -369,7 +369,7 @@ export const RECETAS: Receta[] = [
 },
 {
   id: 'plantilla-suave', cat: 'sopas',
-  nombre: 'Plantilla oficial: crema suave a tu gusto',
+  nombre: 'Plantilla: crema suave a tu gusto',
   raciones: '3-4', racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
   principal: 'a elegir', tags: ['suave'], plantilla: true,
   limiteMl: 1400,
@@ -388,7 +388,7 @@ export const RECETAS: Receta[] = [
     { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
-  tip: 'Consejo oficial: añade un par de chorritos de nata al final del programa para una textura más cremosa.',
+  tip: 'Un par de chorritos de nata al final del programa y queda mucho más cremosa.',
   nota: 'Es una plantilla, no una receta cerrada. Con 1 L de líquido se queda muy cerca de la línea de 1,4 L: no añadas de más, y si acaso completa al final.'
 },
 /* --------------------------------- SALSAS --------------------------------- */
@@ -415,7 +415,7 @@ export const RECETAS: Receta[] = [
     { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
-  discrepancia: 'La receta oficial pide 4 latas de 400 g de tomate (unos 1,6 L solo de tomate), pero el manual prohíbe pasar de la línea HOT de 1,4 L en los modos con calor. La app NO resuelve la contradicción por su cuenta: fíjate en la línea grabada de tu jarra y reduce la cantidad de tomate hasta no superarla.'
+  discrepancia: 'Ojo con la cantidad: 4 latas de 400 g son ya 1,6 L solo de tomate, por encima de la línea de 1,4 L que no debes pasar con calor. Ve echando latas hasta la línea grabada y guarda lo que sobre; con tres latas suele quedar justo.'
 },
 {
   id: 'alfredo', cat: 'salsas',

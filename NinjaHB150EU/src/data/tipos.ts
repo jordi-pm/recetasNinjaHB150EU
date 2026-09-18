@@ -80,7 +80,7 @@ export type Receta = {
   sinUsar?: number[];
   plantilla?: boolean;
   tecnica?: boolean;
-  /** Recetas propias del usuario, no del recetario oficial. */
+  /** Recetas creadas por el usuario dentro de la app. */
   propia?: boolean;
 };
 
