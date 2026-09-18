@@ -25,12 +25,6 @@
     }
   },
   "submit": {
-    "production": {
-      "ios": {
-        "appleId": "TU_APPLE_ID@ejemplo.com",
-        "ascAppId": "RELLENAR_DESPUES_DE_CREAR_LA_APP",
-        "appleTeamId": "RELLENAR_CON_TU_TEAM_ID"
-      }
-    }
+    "production": {}
   }
 }
