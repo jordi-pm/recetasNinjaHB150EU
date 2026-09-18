@@ -25,9 +25,9 @@ Todo (favoritos, lista de la compra, notas, historial, recetas propias) se
 guarda solo en el dispositivo con AsyncStorage. No hay cuentas, ni analítica,
 ni publicidad, ni SDK de terceros que recoja nada. No sale nada del móvil.
 
-**URL de política de privacidad**: obligatoria igualmente. Tienes el texto en
-`tienda/politica-privacidad.md`; súbelo a cualquier sitio público (GitHub Pages,
-Notion público, tu web) y pega ahí la URL.
+**URL de política de privacidad** (verificada como pública el 18/09/2026):
+
+    https://gist.github.com/jordi-pm/2d38c4be7fcf47e61077e08d451fa8be
 
 ## Cifrado (aparece al subir la build)
 
