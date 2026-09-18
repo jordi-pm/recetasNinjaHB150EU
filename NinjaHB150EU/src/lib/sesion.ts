@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CLAVE = 'ninja-hb150eu/sesion/v1';
+const CLAVE = 'sopera/sesion/v1';
 const CADUCA_MS = 6 * 60 * 60 * 1000; // 6 h
 
 export type Sesion = { id: string; paso: number; escala: number; ts: number };

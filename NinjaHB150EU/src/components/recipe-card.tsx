@@ -1,9 +1,7 @@
-import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { fotoDe } from '@/data/fotos';
 import type { Receta } from '@/data/tipos';
 import { usePalette } from '@/hooks/use-palette';
 import { categoriaPorId, tiempoTotal } from '@/lib/format';
@@ -15,7 +13,6 @@ export function RecipeCard({ receta }: { receta: Receta }) {
   const router = useRouter();
   const { esFav, alternarFav } = useApp();
   const fav = esFav(receta.id);
-  const foto = fotoDe(receta.foto);
   const cat = categoriaPorId(receta.cat);
 
   return (
@@ -27,13 +24,9 @@ export function RecipeCard({ receta }: { receta: Receta }) {
       ]}
       accessibilityRole="button"
       accessibilityLabel={receta.nombre}>
-      {foto ? (
-        <Image source={foto} style={styles.thumb} contentFit="cover" transition={150} />
-      ) : (
-        <View style={[styles.thumb, styles.thumbPh, { backgroundColor: c.cardAlt }]}>
-          <Text style={{ fontSize: 28 }}>{cat?.emoji}</Text>
-        </View>
-      )}
+      <View style={[styles.thumb, styles.thumbPh, { backgroundColor: c.cardAlt }]}>
+        <Text style={{ fontSize: 30 }}>{cat?.emoji}</Text>
+      </View>
 
       <View style={styles.body}>
         <Text style={[styles.title, { color: c.text }]} numberOfLines={2}>

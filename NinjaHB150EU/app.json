@@ -1,18 +1,22 @@
 {
   "expo": {
-    "name": "Mis Recetas Ninja HB150EU",
-    "slug": "mis-recetas-ninja-hb150eu",
-    "version": "1.1.0",
+    "name": "Sopera",
+    "slug": "sopera",
+    "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
-    "scheme": "ninjahb150eu",
+    "scheme": "sopera",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "bundleIdentifier": "com.jlumbrerasa.misrecetasninjahb150eu",
+      "bundleIdentifier": "com.jlumbrerasa.sopera",
       "supportsTablet": true,
       "icon": "./assets/images/icon.png",
       "infoPlist": {
-        "CFBundleDisplayName": "Recetas HB150EU"
+        "CFBundleDisplayName": "Sopera"
+      },
+      "buildNumber": "1",
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {

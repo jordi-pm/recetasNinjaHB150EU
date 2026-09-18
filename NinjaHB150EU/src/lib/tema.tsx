@@ -4,7 +4,7 @@ import { Appearance, useColorScheme } from 'react-native';
 
 export type PrefTema = 'sistema' | 'claro' | 'oscuro';
 
-const CLAVE = 'ninja-hb150eu/tema/v1';
+const CLAVE = 'sopera/tema/v1';
 
 type Ctx = {
   pref: PrefTema;

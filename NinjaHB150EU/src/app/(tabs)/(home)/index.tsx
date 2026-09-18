@@ -87,12 +87,12 @@ export default function Inicio() {
 
         <View style={[styles.hero, { backgroundColor: c.hero }]}>
           <Eyebrow color="#8B99A8">Recetario personal</Eyebrow>
-          <Text style={styles.heroTitle}>Ninja Foodi{'\n'}Blender & Soup Maker</Text>
+          <Text style={styles.heroTitle}>Sopas, cremas{'\n'}y batidos</Text>
           <Text style={styles.heroSub}>
-            Solo recetas del manual y el recetario oficiales del HB150EU. Sin Air Fryer, Multicooker ni otros modelos.
+            Para batidoras soperas de jarra calefactora. Cada paso te dice qué tecla pulsar y cuánto esperar.
           </Text>
           <View style={styles.chips}>
-            {[`${oficiales} recetas oficiales`, '10 programas Auto-iQ', '1,4 L HOT · 1,6 L COLD'].map((t) => (
+            {[`${oficiales} recetas`, '10 programas automáticos', '1,4 L HOT · 1,6 L COLD'].map((t) => (
               <View key={t} style={[styles.chip, { borderColor: c.panelBorder }]}>
                 <Text style={styles.chipTxt} maxFontSizeMultiplier={1.3}>{t.toUpperCase()}</Text>
               </View>
@@ -121,7 +121,7 @@ export default function Inicio() {
           <Acceso icono="📏" titulo="¿Cabe en la jarra?" sub="Comprueba si te pasas de la línea sin seguir receta" onPress={() => router.push('/cabe')} />
           <Acceso icono="⏱" titulo="Los programas por dentro" sub="Qué hace cada uno y cuánto tarda" onPress={() => router.push('/programas')} />
           <Acceso icono="✏️" titulo="Añadir receta tuya" sub={propias.length ? `Tienes ${propias.length} guardada${propias.length > 1 ? 's' : ''}` : 'Con la misma ficha y los mismos avisos'} onPress={() => router.push('/nueva-receta')} />
-          <Acceso icono="⚙️" titulo="Mi HB150EU" sub="Programas, límites y todos los avisos del manual" onPress={() => router.push('/maquina')} />
+          <Acceso icono="⚙️" titulo="Mi aparato" sub="Programas, límites de llenado y avisos de seguridad" onPress={() => router.push('/maquina')} />
         </View>
 
         {propias.length > 0 && (

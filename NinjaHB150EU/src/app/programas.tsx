@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { PanelKey } from '@/components/panel-key';
 import { Callout, Card, SectionTitle } from '@/components/ui-kit';
-import { FUENTE_GUIA, MAQUINA } from '@/data/recetas';
+import { MAQUINA } from '@/data/recetas';
 import { usePalette } from '@/hooks/use-palette';
 import { FONT, RADIUS } from '@/theme/colors';
 
@@ -19,10 +19,9 @@ export default function Programas() {
         style={{ backgroundColor: c.bg }}
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}>
-        <Callout tone="tip" title="De dónde sale esto">
-          Las fases las describe el propio recetario de Ninja en sus plantillas de sopa (páginas 6–9). Las
-          duraciones salen de los tiempos que el recetario da para cada programa. El manual no publica una tabla
-          de tiempos, así que trátalas como orientativas.
+        <Callout tone="tip" title="Son orientativas">
+          Las duraciones y las fases son las típicas de este tipo de aparato, medidas sobre las recetas de la app.
+          Tu modelo puede variar algún minuto: fíjate en la cuenta atrás de tu panel.
         </Callout>
 
         {MAQUINA.programas.map((p) => (
@@ -55,7 +54,7 @@ export default function Programas() {
                 ))
               ) : (
                 <Text style={[styles.sinDoc, { color: c.muted }]}>
-                  Ninja no publica el detalle de las fases de este programa. No nos lo inventamos.
+                  No tenemos el detalle de las fases de este programa, así que no lo inventamos.
                 </Text>
               )}
 
@@ -68,12 +67,6 @@ export default function Programas() {
           </View>
         ))}
 
-        <SectionTitle style={{ marginTop: 26 }}>Fuente</SectionTitle>
-        <Card style={styles.pad}>
-          <Text style={[styles.body, { color: c.muted }]}>
-            {FUENTE_GUIA.nombre} ({FUENTE_GUIA.ref}).
-          </Text>
-        </Card>
       </ScrollView>
     </>
   );

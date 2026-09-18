@@ -63,7 +63,7 @@ type Ctx = Estado & {
   vecesCocinada: (id: string) => number;
 };
 
-const CLAVE = 'ninja-hb150eu/estado/v2';
+const CLAVE = 'sopera/estado/v1';
 const AppCtx = createContext<Ctx | null>(null);
 
 /* ------------------------------ provider ------------------------------- */

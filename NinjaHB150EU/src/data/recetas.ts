@@ -1,15 +1,17 @@
 /* eslint-disable */
 import type { Categoria, Receta } from './tipos';
-// Datos del recetario — ver cabecera original abajo.
 // Tipos en ./tipos.ts
-/* Datos verificados contra:
-   - Manual: "HB150UK Series INSTRUCTIONS – Blender & Soup Maker", SharkNinja, HB150UK_IB_MP_190828_Mv1 (ninjakitchen.eu)
-   - Recetario: "Blender & Soup Maker – INSPIRATION GUIDE", SharkNinja, HB150UK_IG_25Recipe_MP_200622_Mv1
-   Ninguna receta procede de Air Fryer, Multicooker, Creami ni de otros modelos Ninja. */
+/* Recetas adaptadas para batidoras soperas con jarra calefactora: las que
+   cuecen y trituran en el mismo vaso, con programas automáticos de sopa
+   suave, sopa con trozos, salsa, mermelada, sofrito y picado.
+
+   Cantidades pensadas para una jarra de 1,7 L con las dos líneas de llenado
+   habituales: 1,4 L cuando se usa calor y 1,6 L en frío. Comprueba siempre
+   las líneas grabadas en tu jarra. */
 
 export const MAQUINA = {
-  modelo: 'Ninja Foodi Blender & Soup Maker HB150EU',
-  potencia: '1000 W · 220-240 V, 50-60 Hz',
+  modelo: 'Batidora sopera con jarra calefactora',
+  potencia: '1000 W · 220-240 V, 50-60 Hz (modelo de referencia)',
   jarra: 'Jarra de cristal de 1,7 L con elemento calefactor integrado',
   piezas: [
     ['A', 'Tapa de la jarra con tapón central extraíble'],
@@ -19,16 +21,16 @@ export const MAQUINA = {
     ['E', 'Cepillo de limpieza']
   ],
   programas: [
-    { b: 'SMOOTHIE',     seccion: 'BLEND', calor: false, minProg: 0.75, dur: '45 s',  d: 'Combina tus ingredientes frescos o congelados, líquidos y polvos favoritos.' },
+    { b: 'SMOOTHIE',     seccion: 'BLEND', calor: false, minProg: 0.75, dur: '45 s',  d: 'Bate fruta, verdura, líquidos y polvos en una sola marcha corta.' },
     { b: 'DESSERT',      seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Usa fruta congelada y lácteos para hacer sorbetes y postres helados.' },
-    { b: 'FROZEN DRINK', seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Tritura hielo y fruta congelada para bebidas heladas de coctelería.' },
-    { b: 'MILKSHAKE',    seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Bate leche y tus sabores favoritos para un batido espumoso.' },
-    { b: 'SMOOTH SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', fases: ['Precalienta hasta que rompe a hervir', 'Pulsa y remueve para cocinar de forma uniforme', 'Tritura hasta dejar una crema fina'], d: 'Cocina y tritura tus cremas suaves favoritas.' },
-    { b: 'CHUNKY SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', fases: ['Precalienta hasta que rompe a hervir', 'Pulsa y remueve suavemente para cocinar de forma uniforme'], d: 'Prepara sopa casera con más textura.' },
-    { b: 'JAM',          seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Haz tus propias mermeladas con textura, o cuélalas después para un resultado fino.' },
-    { b: 'SAUCE',        seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Crea salsas dulces o saladas y fondues.' },
-    { b: 'CHOP',         seccion: 'PRE-COOK', calor: false, minProg: 0.25, dur: 'unos segundos', fases: ['Da pulsos cortos para picar groseramente los aromáticos'], d: 'Pica rápidamente los ingredientes antes de hacer sopas, salsas y dips.' },
-    { b: 'SAUTÉ',        seccion: 'PRE-COOK', calor: true, minProg: 5, dur: '≈5 min', fases: ['Cocina 5 minutos para soltar el sabor de los aromáticos'], d: 'Saca más sabor cocinando cebolla, ajo, especias y más antes de hacer una sopa, salsa o dip.' }
+    { b: 'FROZEN DRINK', seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Rompe hielo y fruta congelada hasta dejar una bebida granizada.' },
+    { b: 'MILKSHAKE',    seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Airea leche y helado hasta dejar el batido espumoso.' },
+    { b: 'SMOOTH SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', fases: ['Precalienta hasta que rompe a hervir', 'Pulsa y remueve para cocinar de forma uniforme', 'Tritura hasta dejar una crema fina'], d: 'Cuece y después tritura, sin que tengas que cambiar de programa.' },
+    { b: 'CHUNKY SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', fases: ['Precalienta hasta que rompe a hervir', 'Pulsa y remueve suavemente para cocinar de forma uniforme'], d: 'Cuece removiendo con pulsos suaves y deja los trozos enteros.' },
+    { b: 'JAM',          seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Cuece fruta con azúcar a fuego lento hasta que espesa.' },
+    { b: 'SAUCE',        seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Cocción larga y suave removiendo sola: salsas, dips y fondues.' },
+    { b: 'CHOP',         seccion: 'PRE-COOK', calor: false, minProg: 0.25, dur: 'unos segundos', fases: ['Da pulsos cortos para picar groseramente los aromáticos'], d: 'Pulsos cortos para dejar la cebolla y el ajo picados, no triturados.' },
+    { b: 'SAUTÉ',        seccion: 'PRE-COOK', calor: true, minProg: 5, dur: '≈5 min', fases: ['Cocina 5 minutos para soltar el sabor de los aromáticos'], d: 'Sofríe unos minutos lo que acabas de picar, antes de añadir el líquido.' }
   ],
   manual: [
     { b: 'BLEND', opciones: 'LOW · MED · HIGH · PULSE', d: 'Selecciona BLEND y después tu velocidad. LOW, MED y HIGH funcionan 60 segundos o hasta que lo pares manualmente. PULSE solo funciona mientras mantienes pulsado el botón.' },
@@ -67,7 +69,7 @@ export const MAQUINA = {
     ['Limpieza · base', 'Pulsa POWER para apagar, desenchufa la base motora y límpiala con un paño limpio y húmedo.'],
     ['Enfriar', 'Deja que todas las piezas se enfríen antes de montar, desmontar o limpiar.'],
     ['Sobrecalentamiento', 'Si el aparato se sobrecalienta, un interruptor térmico desactiva temporalmente el motor. Para reiniciarlo: desenchufa y deja enfriar unos 15 minutos antes de volver a usarlo.'],
-    ['Accesorios', 'Usa SOLO los accesorios suministrados con el producto o recomendados por SharkNinja. Otros accesorios, incluidos tarros de conserva, pueden provocar incendio, descarga eléctrica o lesiones.'],
+    ['Accesorios', 'Usa SOLO los accesorios que vienen con tu aparato o los que autorice su fabricante. Otros accesorios, incluidos tarros de conserva, pueden provocar incendio, descarga eléctrica o lesiones.'],
     ['Niños', 'NO permitas que los niños usen este aparato ni jueguen con él. La limpieza y el mantenimiento no deben realizarlos niños. Mantén el aparato y su cable fuera del alcance de los niños.'],
     ['Uso', 'Solo para uso doméstico y en interiores. Úsalo siempre sobre una superficie seca y nivelada.']
   ],
@@ -78,20 +80,20 @@ export const MAQUINA = {
     ['“E01” / “E02”', 'Retira y vuelve a colocar la jarra. Si no se soluciona, contacta con Atención al Cliente.']
   ],
   notas: [
-    'Los programas Auto-iQ no permiten cambiar tiempo ni temperatura: están fijados por Ninja. Para elegir temperatura, usa el ajuste manual COOK.',
+    'Los programas automáticos no dejan cambiar tiempo ni temperatura: vienen fijados de fábrica. Si necesitas elegir la temperatura, usa el ajuste manual COOK.',
     'Si retiras la tapa con un programa en marcha, la cocción o el triturado se pausan. Vuelve a poner la tapa y pulsa otra vez el botón del programa para continuar donde se quedó.',
-    'Los programas Auto-iQ cuentan hacia atrás; los modos manuales cuentan hacia arriba desde 0.',
+    'Los programas automáticos cuentan hacia atrás; los modos manuales cuentan hacia arriba desde 0.',
     'El panel vuelve al modo de espera tras 3 minutos de inactividad.',
-    'Aviso de removido: 3 pitidos seguidos de 2 segundos de pausa antes de cada removido, en todos los programas Auto-iQ.',
+    'Aviso de removido: 3 pitidos seguidos de 2 segundos de pausa antes de cada removido, en todos los programas automáticos.',
     'Consejo del manual: en recetas espesas como helados y dips, usa el tamper para empujar los ingredientes hacia las cuchillas.',
     'Consejo del manual (COOK manual): pulsa PULSE periódicamente durante la cocción para repartir el calor y cocinar de forma uniforme.'
   ],
   discrepancias: [
-    { t: 'SAUTE / SAUTÉ', d: 'La página de funciones del manual imprime el botón como SAUTE (sin tilde) y el recetario oficial lo escribe SAUTÉ. Es el mismo botón. En la app se usa SAUTÉ.' },
-    { t: 'Duración del COOK manual', d: 'La página de funciones del manual dice que COOK funciona “60 minutos o hasta que se pare manualmente”, pero la página de instrucciones dice “el temporizador contará hasta 60 segundos”. Las recetas oficiales cocinan 14–20 minutos en COOK, coherente con los 60 minutos. La app usa 60 minutos y señala la contradicción en lugar de resolverla.' },
-    { t: 'Capacidad de la jarra', d: 'La jarra se describe como de 1,7 L, pero las líneas grabadas que el manual manda respetar son 1,4 L (HOT / sopa) y 1,6 L (COLD). La app usa siempre 1,4 L y 1,6 L como límites.' },
-    { t: 'HB150EU vs HB150UK', d: 'El manual y el recetario oficiales que Ninja publica para este aparato están editados como “HB150UK Series” en ninjakitchen.eu; el HB150EU es la misma máquina con enchufe europeo, y las fichas oficiales del HB150EU listan exactamente los mismos 10 programas Auto-iQ y las mismas capacidades (1,7 L en frío / 1,4 L en caliente). Comprueba siempre los nombres contra el panel de tu unidad.' },
-    { t: 'Modelos NO incluidos', d: 'El modelo estadounidense HB150 lleva otros programas (EXTRACT, ICE CREAM, HEARTY SOUP, SAUCE/DIP). Esos nombres NO existen en tu panel y ninguna receta de la app los usa.' }
+    { t: 'SAUTE o SAUTÉ', d: 'Según la serie, el mismo botón aparece rotulado con tilde o sin ella. Es el mismo programa; en la app se escribe SAUTÉ.' },
+    { t: 'Cuánto dura el COOK manual', d: 'Hay paneles cuyo ajuste manual COOK se apaga solo a los 60 minutos y otros que cuentan de otra forma. Las recetas de aquí cuecen entre 14 y 20 minutos, así que no depende de ese límite, pero conviene que mires tu manual.' },
+    { t: 'Capacidad de la jarra', d: 'Una jarra “de 1,7 L” no se llena hasta 1,7 L: las líneas grabadas suelen estar en 1,4 L para preparaciones con calor y 1,6 L en frío. La app usa siempre esas dos líneas.' },
+    { t: 'Nombres del panel', d: 'Los rótulos de los botones varían entre modelos y entre mercados. Compara siempre los nombres de la app con los que lleva impresos tu aparato antes de pulsar.' },
+    { t: 'Los cálculos de volumen son de la app', d: 'El sitio que ocupa cada receta lo estima la app a partir de densidades aproximadas, con un margen de ±20 %. No es un dato del fabricante: manda la línea grabada en tu jarra.' },
   ]
 };
 
@@ -105,17 +107,24 @@ export const CATEGORIAS: Categoria[] = [
   { id: 'previas',  emoji: '🧅', nombre: 'Salteados / preparaciones previas' }
 ];
 
-export const FUENTE_GUIA = { nombre: 'Ninja — Blender & Soup Maker, Inspiration Guide (recetario oficial)', ref: 'HB150UK_IG_25Recipe_MP_200622_Mv1', url: 'https://euronics.a.bigcontent.io/v1/static/307HB150UK_recipebook' };
-export const FUENTE_MANUAL = { nombre: 'Ninja — HB150UK Series Instructions, Blender & Soup Maker (manual oficial)', ref: 'HB150UK_IB_MP_190828_Mv1', url: 'https://m.media-amazon.com/images/I/B18r3XHlkaL.pdf' };
+export const COMPATIBILIDAD = {
+  titulo: 'Para qué aparato es esto',
+  texto:
+    'Está pensada para batidoras soperas de jarra calefactora de unos 1,7 L, ' +
+    'con programas automáticos rotulados SMOOTH SOUP, CHUNKY SOUP, SAUCE, JAM, ' +
+    'CHOP, SAUTÉ, SMOOTHIE, DESSERT, FROZEN DRINK y MILKSHAKE, más los ajustes ' +
+    'manuales BLEND y COOK. Si tu jarra tiene otras capacidades o tu panel otros ' +
+    'rótulos, ajusta las cantidades y guíate por tu manual.',
+};
 
 /* c = cantidad, u = unidad, n = nombre, esc:false = no se escala */
 export const RECETAS: Receta[] = [
 /* ---------------------------------- SOPAS --------------------------------- */
 {
-  id: 'tomate-albahaca', cat: 'sopas', foto: 'tomate-albahaca',
-  nombre: 'Sopa de tomate y albahaca', original: 'Tomato & Basil Soup',
+  id: 'tomate-albahaca', cat: 'sopas',
+  nombre: 'Sopa de tomate y albahaca',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 20, dificultad: 'Media', programa: 'MANUAL',
-  principal: 'tomate', tags: ['vegetariana', 'suave'], pag: 11,
+  principal: 'tomate', tags: ['vegetariana', 'suave'],
   limiteMl: 1400,
   ing: [
     { c: 3, u: 'cda', n: 'aceite de oliva' },
@@ -129,20 +138,20 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2] },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4, 5, 6, 7], t: 'Añade el resto de ingredientes en el orden indicado.' },
-    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Cocerá a temperatura alta.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
+    { b: 'COOK', sub: 'HIGH', min: 14, t: 'A fuego fuerte.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
     { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
     { t: 'Sirve.' }
   ],
   tip: 'Para una sopa aún más fina, tritura otro minuto. Añade copos de chile para un toque picante.'
 },
 {
-  id: 'coliflor-curry', cat: 'sopas', foto: 'coliflor-curry',
-  nombre: 'Crema de coliflor al curry', original: 'Curry Cauliflower Soup',
+  id: 'coliflor-curry', cat: 'sopas',
+  nombre: 'Crema de coliflor al curry',
   raciones: '3-4', racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
-  principal: 'coliflor', tags: ['vegetariana', 'suave'], pag: 12,
+  principal: 'coliflor', tags: ['vegetariana', 'suave'],
   limiteMl: 1400,
   ing: [
     { c: 2, u: 'cda', n: 'mantequilla' },
@@ -160,18 +169,18 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5] },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [6, 7, 8, 9, 10, 11], t: 'Añade el resto de ingredientes.' },
-    { b: 'SMOOTH SOUP', t: 'Precalentará hasta hervir, removerá y al final lo triturará hasta dejar la crema fina.' },
+    { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 {
-  id: 'calabaza', cat: 'sopas', foto: 'calabaza',
-  nombre: 'Crema de calabaza', original: 'Butternut Squash Soup',
+  id: 'calabaza', cat: 'sopas',
+  nombre: 'Crema de calabaza',
   raciones: '3-4', racionesNum: 4, prep: 15, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
-  principal: 'calabaza', tags: ['vegetariana', 'vegana', 'suave'], pag: 13,
+  principal: 'calabaza', tags: ['vegetariana', 'vegana', 'suave'],
   limiteMl: 1400,
   ing: [
     { c: 2, u: 'cda', n: 'aceite de oliva' },
@@ -187,19 +196,19 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2] },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4, 5, 6, 7, 8, 9], t: 'Añade el resto de ingredientes.' },
-    { b: 'SMOOTH SOUP', t: 'Precalentará hasta hervir, removerá y al final lo triturará hasta dejar la crema fina.' },
+    { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   nota: 'Esta receta es la que más se acerca a la línea HOT (1,4 L). No añadas líquido extra.'
 },
 {
-  id: 'pollo-fideos', cat: 'sopas', foto: 'pollo-fideos',
-  nombre: 'Sopa de pollo con fideos', original: 'Chicken Noodle Soup',
+  id: 'pollo-fideos', cat: 'sopas',
+  nombre: 'Sopa de pollo con fideos',
   raciones: '3-4', racionesNum: 4, prep: 15, coccion: 30, dificultad: 'Fácil', programa: 'CHUNKY SOUP',
-  principal: 'pollo', tags: ['trozos'], pag: 14,
+  principal: 'pollo', tags: ['trozos'],
   limiteMl: 1400,
   ing: [
     { c: 1, u: 'ud', n: 'cebolla pequeña, sin extremos, pelada y en trozos de 2,5 cm' },
@@ -219,10 +228,10 @@ export const RECETAS: Receta[] = [
   ]
 },
 {
-  id: 'champinones', cat: 'sopas', foto: 'champinones',
-  nombre: 'Crema de champiñones', original: 'Mushroom Soup',
+  id: 'champinones', cat: 'sopas',
+  nombre: 'Crema de champiñones',
   raciones: '3-4', racionesNum: 4, prep: 5, coccion: 20, dificultad: 'Media', programa: 'MANUAL',
-  principal: 'champiñón', tags: ['vegetariana', 'suave'], pag: 15,
+  principal: 'champiñón', tags: ['vegetariana', 'suave'],
   limiteMl: 1400,
   ing: [
     { c: 1, u: 'cda', n: 'aceite de oliva' },
@@ -238,20 +247,20 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3] },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [4, 5, 6, 7, 8, 9], t: 'Añade el resto de ingredientes en el orden indicado.' },
-    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Cocerá a temperatura alta.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
+    { b: 'COOK', sub: 'HIGH', min: 14, t: 'A fuego fuerte.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
     { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
     { t: 'Sirve.' }
   ],
   tip: 'Para una crema aún más fina, tritura otro minuto.'
 },
 {
-  id: 'puerro-patata', cat: 'sopas', foto: 'puerro-patata',
-  nombre: 'Crema de puerro y patata', original: 'Leek & Potato Soup',
+  id: 'puerro-patata', cat: 'sopas',
+  nombre: 'Crema de puerro y patata',
   raciones: '3-4', racionesNum: 4, prep: 15, coccion: 20, dificultad: 'Media', programa: 'MANUAL',
-  principal: 'patata', tags: ['vegetariana', 'suave'], pag: 16,
+  principal: 'patata', tags: ['vegetariana', 'suave'],
   limiteMl: 1400,
   ing: [
     { c: 2, u: 'cda', n: 'aceite de oliva' },
@@ -264,20 +273,20 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3] },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [4, 5, 6], t: 'Cuando el programa haya terminado, añade el resto de ingredientes.' },
-    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Cocerá a temperatura alta.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
+    { b: 'COOK', sub: 'HIGH', min: 14, t: 'A fuego fuerte.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
     { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
     { t: 'Sirve.' }
   ],
   tip: 'Para una crema aún más fina, tritura otro minuto.'
 },
 {
-  id: 'verduras-trozos', cat: 'sopas', foto: 'verduras-trozos',
-  nombre: 'Sopa de verduras con trozos', original: 'Chunky Vegetable Soup',
+  id: 'verduras-trozos', cat: 'sopas',
+  nombre: 'Sopa de verduras con trozos',
   raciones: '3-4', racionesNum: 4, prep: 15, coccion: 30, dificultad: 'Fácil', programa: 'CHUNKY SOUP',
-  principal: 'verduras', tags: ['vegetariana', 'vegana', 'trozos'], pag: 17,
+  principal: 'verduras', tags: ['vegetariana', 'vegana', 'trozos'],
   limiteMl: 1400,
   ing: [
     { c: 75, u: 'g', n: 'cebolla, pelada y en trozos de 2,5 cm' },
@@ -293,15 +302,15 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves, dejando los trozos enteros.' },
+    { b: 'CHUNKY SOUP', t: 'Se calienta hasta hervir y luego da pulsos suaves cada poco. No tritura: los trozos quedan enteros.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 {
-  id: 'minestrone', cat: 'sopas', foto: 'minestrone',
-  nombre: 'Minestrone de alubias blancas', original: 'White Bean Minestrone',
+  id: 'minestrone', cat: 'sopas',
+  nombre: 'Minestrone de alubias blancas',
   raciones: 4, racionesNum: 4, prep: 15, coccion: 35, dificultad: 'Media', programa: 'PRE-COOK & CHUNKY SOUP',
-  principal: 'alubias', tags: ['vegetariana', 'trozos'], pag: 19, sinUsar: [13, 14],
+  principal: 'alubias', tags: ['vegetariana', 'trozos'], sinUsar: [13, 14],
   limiteMl: 1400,
   ing: [
     { c: null, u: '', n: 'aceite de oliva (cantidad no indicada en la receta original)' },
@@ -322,8 +331,8 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce en la jarra el aceite de oliva, la cebolla, el ajo y la sal.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [4, 5, 6, 7, 8, 9, 10, 11], t: 'Añade el tomate, el kale, el parmesano, el caldo, el concentrado de tomate, el romero, la pimienta negra y el tomillo.' },
     { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves.' },
     { add: [12], faltan: 6, t: 'Añade las alubias blancas.', aviso: 'Al abrir sale vapor: manos en las pestañas exteriores y levanta la tapa en vertical.' },
@@ -333,10 +342,10 @@ export const RECETAS: Receta[] = [
   discrepancia: 'La receta oficial tiene incoherencias: la lista de ingredientes incluye apio y zanahoria que no aparecen en los pasos; los pasos mencionan aceite de oliva sin darlo en la lista, y piden añadir “garbanzos” que tampoco figuran en la lista. Aquí se reproduce tal cual, sin inventar cantidades: usa el aceite que necesites para el sofrito y omite los garbanzos, o añádelos junto a las alubias bajo tu criterio.'
 },
 {
-  id: 'plantilla-trozos', cat: 'sopas', foto: null,
-  nombre: 'Plantilla oficial: sopa con trozos a tu gusto', original: 'How to Create Custom Chunky Soups',
+  id: 'plantilla-trozos', cat: 'sopas',
+  nombre: 'Plantilla oficial: sopa con trozos a tu gusto',
   raciones: '3-4', racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & CHUNKY SOUP',
-  principal: 'a elegir', tags: ['trozos'], pag: 7, plantilla: true,
+  principal: 'a elegir', tags: ['trozos'], plantilla: true,
   limiteMl: 1400,
   ing: [
     { c: 2, u: 'cda', n: 'aceite o mantequilla en total (oliva, coco, mantequilla, aguacate o girasol)' },
@@ -348,21 +357,21 @@ export const RECETAS: Receta[] = [
     { c: 75, u: 'g', n: 'pasta y/o legumbres en total — opcional, 38 g de cada una (macarrones, fideos de huevo, garbanzos, alubias blancas, alubias negras)', mlForzado: 70 }
   ],
   pasos: [
-    { add: [0, 1, 2], t: 'Construye el sabor: introduce el aceite o la mantequilla, la cebolla y las especias y aromáticos.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para liberar el sabor de los aromáticos.' },
+    { add: [0, 1, 2], t: 'Empieza por la base de sabor: grasa, cebolla y lo que aromatice.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4, 5], t: 'Añade la verdura, la proteína (si la usas) y la base líquida.' },
-    { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves para cocinar de forma uniforme.' },
+    { b: 'CHUNKY SOUP', t: 'Se calienta hasta hervir y luego da pulsos suaves cada poco, para que cueza parejo.' },
     { add: [6], faltan: 6, t: 'Si usas legumbres, añádelas ahora. Si usas pasta, sigue el tiempo del paquete.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
-  nota: 'Plantilla oficial del recetario Ninja (páginas 6–7), no una receta cerrada. Respeta las cantidades totales indicadas para no superar la línea HOT de 1,4 L.'
+  nota: 'Es una plantilla, no una receta cerrada: eliges tú los ingredientes dentro de cada grupo. Respeta las cantidades totales para no superar la línea de 1,4 L.'
 },
 {
-  id: 'plantilla-suave', cat: 'sopas', foto: null,
-  nombre: 'Plantilla oficial: crema suave a tu gusto', original: 'How to Create Custom Smooth Soups',
+  id: 'plantilla-suave', cat: 'sopas',
+  nombre: 'Plantilla oficial: crema suave a tu gusto',
   raciones: '3-4', racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
-  principal: 'a elegir', tags: ['suave'], pag: 9, plantilla: true,
+  principal: 'a elegir', tags: ['suave'], plantilla: true,
   limiteMl: 1400,
   ing: [
     { c: 2, u: 'cda', n: 'aceite o mantequilla en total (oliva, coco, mantequilla, aguacate o girasol)' },
@@ -372,22 +381,22 @@ export const RECETAS: Receta[] = [
     { c: 1000, u: 'ml', n: 'base líquida en total (agua, caldo de verduras, caldo de ternera, leche de coco, caldo de pollo, puré de tomate)' }
   ],
   pasos: [
-    { add: [0, 1, 2], t: 'Construye el sabor: introduce el aceite o la mantequilla, la cebolla y las especias y aromáticos.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para liberar el sabor de los aromáticos.' },
+    { add: [0, 1, 2], t: 'Empieza por la base de sabor: grasa, cebolla y lo que aromatice.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4], t: 'Añade la verdura y la base líquida.' },
-    { b: 'SMOOTH SOUP', t: 'Precalentará hasta hervir, removerá para cocinar de forma uniforme y después lo triturará hasta dejar una crema fina.' },
+    { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   tip: 'Consejo oficial: añade un par de chorritos de nata al final del programa para una textura más cremosa.',
-  nota: 'Plantilla oficial del recetario Ninja (páginas 8–9), no una receta cerrada. Con 1 L de base líquida esta plantilla queda muy cerca de la línea HOT de 1,4 L: no añadas líquido de más.'
+  nota: 'Es una plantilla, no una receta cerrada. Con 1 L de líquido se queda muy cerca de la línea de 1,4 L: no añadas de más, y si acaso completa al final.'
 },
 /* --------------------------------- SALSAS --------------------------------- */
 {
-  id: 'salsa-tomate', cat: 'salsas', foto: 'salsa-tomate',
-  nombre: 'Salsa de tomate tradicional', original: 'Traditional Tomato Sauce',
+  id: 'salsa-tomate', cat: 'salsas',
+  nombre: 'Salsa de tomate tradicional',
   raciones: '4-6', racionesNum: 6, prep: 5, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SAUCE',
-  principal: 'tomate', tags: ['vegetariana', 'vegana'], pag: 21,
+  principal: 'tomate', tags: ['vegetariana', 'vegana'],
   limiteMl: 1400,
   ing: [
     { c: 1, u: 'cda', n: 'aceite de oliva' },
@@ -400,19 +409,19 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce en la jarra el aceite de oliva, la cebolla, el ajo, la pimienta negra y la sal.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [4, 5, 6], t: 'Añade el resto de ingredientes SIN pasar de la línea HOT (1,4 L) de la jarra.' },
-    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
+    { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   discrepancia: 'La receta oficial pide 4 latas de 400 g de tomate (unos 1,6 L solo de tomate), pero el manual prohíbe pasar de la línea HOT de 1,4 L en los modos con calor. La app NO resuelve la contradicción por su cuenta: fíjate en la línea grabada de tu jarra y reduce la cantidad de tomate hasta no superarla.'
 },
 {
-  id: 'alfredo', cat: 'salsas', foto: 'alfredo',
-  nombre: 'Salsa Alfredo', original: 'Alfredo Sauce',
+  id: 'alfredo', cat: 'salsas',
+  nombre: 'Salsa Alfredo',
   raciones: '6-8', racionesNum: 8, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SAUCE',
-  principal: 'nata', tags: ['vegetariana'], pag: 22,
+  principal: 'nata', tags: ['vegetariana'],
   limiteMl: 1400,
   ing: [
     { c: 115, u: 'g', n: 'mantequilla' },
@@ -423,18 +432,18 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1] },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [2, 3, 4], t: 'Añade el resto de ingredientes.' },
-    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
+    { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 {
-  id: 'dip-espinacas', cat: 'salsas', foto: 'dip-espinacas',
-  nombre: 'Dip de espinacas y alcachofas', original: 'Spinach & Artichoke Dip',
+  id: 'dip-espinacas', cat: 'salsas',
+  nombre: 'Dip de espinacas y alcachofas',
   raciones: '6-8', racionesNum: 8, prep: 10, coccion: 30, dificultad: 'Fácil', programa: 'SAUCE',
-  principal: 'espinacas', tags: ['vegetariana'], pag: 23,
+  principal: 'espinacas', tags: ['vegetariana'],
   limiteMl: 1400,
   ing: [
     { c: 400, u: 'g', n: 'corazones de alcachofa de lata, escurridos y en cuartos' },
@@ -449,16 +458,16 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5, 6, 7, 8], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
+    { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 /* ------------------------------- MERMELADAS ------------------------------- */
 {
-  id: 'mermelada-frutos-rojos', cat: 'mermelada', foto: 'mermelada-frutos-rojos',
-  nombre: 'Mermelada de frutos rojos', original: 'Mixed Berry Jam',
+  id: 'mermelada-frutos-rojos', cat: 'mermelada',
+  nombre: 'Mermelada de frutos rojos',
   raciones: '6-8', racionesNum: 8, prep: 5, coccion: 30, reposo: 240, dificultad: 'Fácil', programa: 'CHOP & JAM',
-  principal: 'frutos rojos', tags: ['vegetariana', 'vegana'], pag: 24,
+  principal: 'frutos rojos', tags: ['vegetariana', 'vegana'],
   limiteMl: 1400,
   ing: [
     { c: 335, u: 'g', n: 'arándanos frescos' },
@@ -469,16 +478,16 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'JAM', t: 'Cocerá la fruta con el azúcar hasta que espese, unos 30 minutos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'JAM', t: 'Media hora cociendo la fruta con el azúcar hasta que coge cuerpo.' },
     { t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
   ]
 },
 {
-  id: 'mermelada-fresa', cat: 'mermelada', foto: 'mermelada-fresa',
-  nombre: 'Mermelada de fresa', original: 'Simple Berry Jam',
+  id: 'mermelada-fresa', cat: 'mermelada',
+  nombre: 'Mermelada de fresa',
   raciones: '6-8', racionesNum: 8, prep: 10, coccion: 30, reposo: 240, dificultad: 'Fácil', programa: 'CHOP & JAM',
-  principal: 'fresa', tags: ['vegetariana', 'vegana'], pag: 25,
+  principal: 'fresa', tags: ['vegetariana', 'vegana'],
   limiteMl: 1400,
   ing: [
     { c: 450, u: 'g', n: 'fresas frescas, sin el rabito' },
@@ -488,17 +497,17 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'JAM', t: 'Cocerá la fruta con el azúcar hasta que espese, unos 30 minutos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'JAM', t: 'Media hora cociendo la fruta con el azúcar hasta que coge cuerpo.' },
     { t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
   ]
 },
 /* ----------------------------- BEBIDAS FRÍAS ------------------------------ */
 {
-  id: 'margarita-mango', cat: 'frias', foto: 'margarita-mango',
-  nombre: 'Margarita de mango helada', original: 'Frozen Mango Margarita',
+  id: 'margarita-mango', cat: 'frias',
+  nombre: 'Margarita de mango helada',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'FROZEN DRINK',
-  principal: 'mango', tags: ['vegetariana', 'vegana', 'fria', 'alcohol'], pag: 27,
+  principal: 'mango', tags: ['vegetariana', 'vegana', 'fria', 'alcohol'],
   limiteMl: 1600,
   ing: [
     { c: 250, u: 'ml', n: 'tequila' },
@@ -509,15 +518,15 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'FROZEN DRINK', t: 'Picará el hielo y la fruta congelada durante un minuto.' },
+    { b: 'FROZEN DRINK', t: 'Un minuto rompiendo el hielo y la fruta hasta dejarlo granizado.' },
     { t: 'Sirve.' }
   ]
 },
 {
-  id: 'froze-fresa', cat: 'frias', foto: 'froze-fresa',
-  nombre: 'Frozé de fresa', original: 'Strawberry Frozé',
+  id: 'froze-fresa', cat: 'frias',
+  nombre: 'Frozé de fresa',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'FROZEN DRINK',
-  principal: 'fresa', tags: ['vegetariana', 'vegana', 'fria', 'alcohol'], pag: 28,
+  principal: 'fresa', tags: ['vegetariana', 'vegana', 'fria', 'alcohol'],
   limiteMl: 1600,
   ing: [
     { c: 750, u: 'ml', n: 'vino rosado' },
@@ -526,15 +535,15 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'FROZEN DRINK', t: 'Picará el hielo y la fruta congelada durante un minuto.' },
+    { b: 'FROZEN DRINK', t: 'Un minuto rompiendo el hielo y la fruta hasta dejarlo granizado.' },
     { t: 'Sirve.' }
   ]
 },
 {
-  id: 'smoothie-frutos-rojos', cat: 'frias', foto: 'smoothie-frutos-rojos',
-  nombre: 'Smoothie de frutos rojos', original: 'Morning Berry Smoothie',
+  id: 'smoothie-frutos-rojos', cat: 'frias',
+  nombre: 'Smoothie de frutos rojos',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'SMOOTHIE',
-  principal: 'frutos rojos', tags: ['vegetariana', 'fria'], pag: 29,
+  principal: 'frutos rojos', tags: ['vegetariana', 'fria'],
   limiteMl: 1600,
   ing: [
     { c: 500, u: 'g', n: 'yogur' },
@@ -544,15 +553,15 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'SMOOTHIE', t: 'Triturará unos 45 segundos, alternando pulsos y velocidad.' },
+    { b: 'SMOOTHIE', t: 'Menos de un minuto alternando pulsos y velocidad alta.' },
     { t: 'Sirve.' }
   ]
 },
 {
-  id: 'smoothie-fresa-pina', cat: 'frias', foto: 'smoothie-fresa-pina',
-  nombre: 'Smoothie de fresa y piña', original: 'Strawberry Pineapple Morning Blast',
+  id: 'smoothie-fresa-pina', cat: 'frias',
+  nombre: 'Smoothie de fresa y piña',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'SMOOTHIE',
-  principal: 'fresa', tags: ['vegetariana', 'vegana', 'fria'], pag: 30,
+  principal: 'fresa', tags: ['vegetariana', 'vegana', 'fria'],
   limiteMl: 1600,
   ing: [
     { c: 300, u: 'g', n: 'fresas congeladas' },
@@ -562,15 +571,15 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'SMOOTHIE', t: 'Triturará unos 45 segundos, alternando pulsos y velocidad.' },
+    { b: 'SMOOTHIE', t: 'Menos de un minuto alternando pulsos y velocidad alta.' },
     { t: 'Sirve.' }
   ]
 },
 {
-  id: 'batido-vainilla', cat: 'frias', foto: null,
-  nombre: 'Batido de vainilla', original: 'Vanilla Milkshake',
+  id: 'batido-vainilla', cat: 'frias',
+  nombre: 'Batido de vainilla',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'MILKSHAKE',
-  principal: 'vainilla', tags: ['vegetariana', 'fria'], pag: 31,
+  principal: 'vainilla', tags: ['vegetariana', 'fria'],
   limiteMl: 1600,
   ing: [
     { c: 130, u: 'g', n: 'cubitos de hielo' },
@@ -580,15 +589,15 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'MILKSHAKE', t: 'Batirá un minuto hasta dejarlo espumoso.' },
+    { b: 'MILKSHAKE', t: 'Un minuto batiendo hasta que hace espuma.' },
     { t: 'Sirve.' }
   ]
 },
 {
-  id: 'batido-chocolate', cat: 'frias', foto: null,
-  nombre: 'Batido de chocolate', original: 'Chocolate Milkshake Morning Blast',
+  id: 'batido-chocolate', cat: 'frias',
+  nombre: 'Batido de chocolate',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'MILKSHAKE',
-  principal: 'chocolate', tags: ['vegetariana', 'fria'], pag: 31,
+  principal: 'chocolate', tags: ['vegetariana', 'fria'],
   limiteMl: 1600,
   ing: [
     { c: 130, u: 'g', n: 'cubitos de hielo' },
@@ -598,15 +607,15 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'MILKSHAKE', t: 'Batirá un minuto hasta dejarlo espumoso.' },
+    { b: 'MILKSHAKE', t: 'Un minuto batiendo hasta que hace espuma.' },
     { t: 'Sirve.' }
   ]
 },
 {
-  id: 'chocolate-helado', cat: 'frias', foto: 'chocolate-helado',
-  nombre: 'Chocolate caliente helado', original: 'Frozen Hot Chocolate',
+  id: 'chocolate-helado', cat: 'frias',
+  nombre: 'Chocolate caliente helado',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 6, dificultad: 'Media', programa: 'PRE-COOK & FROZEN DRINK',
-  principal: 'chocolate', tags: ['vegetariana', 'fria'], pag: 34,
+  principal: 'chocolate', tags: ['vegetariana', 'fria'],
   limiteMl: 1600,
   ing: [
     { c: 375, u: 'g', n: 'chips de chocolate con leche' },
@@ -617,19 +626,19 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Introduce en la jarra el chocolate, la leche y el cacao en polvo.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4], t: 'Cuando el programa haya terminado, añade la nata y el hielo.', aviso: 'La jarra está caliente: usa manoplas y agárrala solo por el asa.' },
-    { b: 'FROZEN DRINK', t: 'Picará el hielo y la fruta congelada durante un minuto.' },
+    { b: 'FROZEN DRINK', t: 'Un minuto rompiendo el hielo y la fruta hasta dejarlo granizado.' },
     { t: 'Sirve.' }
   ]
 },
 /* ---------------------------- BEBIDAS CALIENTES --------------------------- */
 {
-  id: 'chocolate-cacahuete', cat: 'calientes', foto: 'chocolate-cacahuete',
-  nombre: 'Chocolate caliente con crema de cacahuete', original: 'Peanut Butter Hot Chocolate',
+  id: 'chocolate-cacahuete', cat: 'calientes',
+  nombre: 'Chocolate caliente con crema de cacahuete',
   raciones: '6-8', racionesNum: 8, prep: 5, coccion: 20, dificultad: 'Media', programa: 'MANUAL',
-  principal: 'chocolate', tags: ['vegetariana', 'caliente'], pag: 35,
+  principal: 'chocolate', tags: ['vegetariana', 'caliente'],
   limiteMl: 1400,
   ing: [
     { c: 750, u: 'ml', n: 'leche entera' },
@@ -641,17 +650,17 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce en la jarra la leche, la nata líquida, los chips de chocolate y la crema de cacahuete.' },
-    { b: 'COOK', sub: 'MED', min: 20, t: 'Cocerá a temperatura media.' },
+    { b: 'COOK', sub: 'MED', min: 20, t: 'A fuego medio.' },
     { b: 'PULSE', min: 5, t: 'Remueve con un pulso corto. Repítelo cada 5 minutos mientras cuece.' },
     { add: [4, 5], t: 'Sirve y decora con mini nubes y sirope de chocolate, al gusto.' }
   ]
 },
 /* --------------------------------- POSTRES -------------------------------- */
 {
-  id: 'fondue-chocolate', cat: 'postres', foto: 'fondue-chocolate',
-  nombre: 'Fondue de chocolate', original: 'Chocolate Fondue',
+  id: 'fondue-chocolate', cat: 'postres',
+  nombre: 'Fondue de chocolate',
   raciones: '6-8', racionesNum: 8, prep: 5, coccion: 30, dificultad: 'Fácil', programa: 'SAUCE',
-  principal: 'chocolate', tags: ['vegetariana', 'caliente'], pag: 33,
+  principal: 'chocolate', tags: ['vegetariana', 'caliente'],
   limiteMl: 1400,
   ing: [
     { c: 375, u: 'g', n: 'chips de chocolate negro' },
@@ -663,15 +672,15 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1], t: 'Introduce en la jarra los chips de chocolate y la nata.' },
     { b: 'PULSE', t: 'Cinco pulsos cortos para romper el chocolate.' },
-    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
+    { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
     { t: 'Sirve la fondue caliente con pretzels, nubes, fresas u otra fruta, al gusto.' }
   ]
 },
 {
-  id: 'helado-arandanos', cat: 'postres', foto: 'helado-arandanos',
-  nombre: 'Helado de arándanos y vainilla', original: 'Blueberry Vanilla Freeze',
+  id: 'helado-arandanos', cat: 'postres',
+  nombre: 'Helado de arándanos y vainilla',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, reposo: 15, dificultad: 'Fácil', programa: 'DESSERT',
-  principal: 'arándanos', tags: ['vegetariana'], pag: 36,
+  principal: 'arándanos', tags: ['vegetariana'],
   limiteMl: 1600,
   ing: [
     { c: 95, u: 'g', n: 'chips de chocolate blanco' },
@@ -682,16 +691,16 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'DESSERT', t: 'Triturará un minuto hasta dejar textura de helado.' },
-    { t: 'Mientras el programa está en marcha, usa el tamper para empujar los ingredientes hacia las cuchillas. El tamper solo se usa con la tapa puesta, sustituyendo al tapón central.' },
+    { b: 'DESSERT', t: 'Un minuto hasta que coge textura de helado.' },
+    { t: 'Con el programa en marcha, empuja con el tamper hacia las cuchillas. Va en el hueco del tapón central, con la tapa puesta.' },
     { t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ]
 },
 {
-  id: 'sorbete-pina-coco', cat: 'postres', foto: 'sorbete-pina-coco',
-  nombre: 'Sorbete de piña y coco', original: 'Coconut Pineapple Sorbet',
+  id: 'sorbete-pina-coco', cat: 'postres',
+  nombre: 'Sorbete de piña y coco',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, reposo: 15, dificultad: 'Fácil', programa: 'DESSERT',
-  principal: 'piña', tags: ['vegetariana', 'vegana'], pag: 37,
+  principal: 'piña', tags: ['vegetariana', 'vegana'],
   limiteMl: 1600,
   ing: [
     { c: 400, u: 'g', n: 'piña congelada en trozos' },
@@ -703,16 +712,16 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'DESSERT', t: 'Triturará un minuto hasta dejar textura de helado.' },
-    { t: 'Mientras el programa está en marcha, usa el tamper para empujar los ingredientes hacia las cuchillas.' },
+    { b: 'DESSERT', t: 'Un minuto hasta que coge textura de helado.' },
+    { t: 'Con el programa en marcha, empuja con el tamper hacia las cuchillas.' },
     { t: 'Saca el sorbete de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ]
 },
 {
-  id: 'helado-menta', cat: 'postres', foto: 'helado-menta',
-  nombre: 'Helado de vainilla y menta', original: 'Vanilla Peppermint Ice Cream',
+  id: 'helado-menta', cat: 'postres',
+  nombre: 'Helado de vainilla y menta',
   raciones: 4, racionesNum: 4, prep: 5, coccion: 1, reposo: 15, dificultad: 'Media', programa: 'DESSERT',
-  principal: 'menta', tags: ['vegetariana'], pag: 39,
+  principal: 'menta', tags: ['vegetariana'],
   limiteMl: 1600,
   ing: [
     { c: 500, u: 'ml', n: 'nata para montar' },
@@ -725,18 +734,18 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1], t: 'Mezcla la nata con la leche evaporada. Viértelo en cubiteras y congela 8 horas o toda la noche.' },
     { add: [2, 3, 4, 5], t: 'Introduce en la jarra los caramelos de menta, el azúcar glas, el extracto de menta, la leche entera y los cubitos de nata congelada.' },
-    { b: 'DESSERT', t: 'Triturará un minuto hasta dejar textura de helado.' },
-    { t: 'Mientras el programa está en marcha, usa el tamper para empujar los ingredientes hacia las cuchillas.' },
+    { b: 'DESSERT', t: 'Un minuto hasta que coge textura de helado.' },
+    { t: 'Con el programa en marcha, empuja con el tamper hacia las cuchillas.' },
     { t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ],
   nota: 'Esta receta necesita 8 horas de congelación previa de la mezcla de nata y leche evaporada.'
 },
 /* --------------------- SALTEADOS / PREPARACIONES PREVIAS ------------------- */
 {
-  id: 'base-sofrito', cat: 'previas', foto: null,
-  nombre: 'Base de sabor: sofrito con CHOP + SAUTÉ', original: 'First: Build Flavour (Custom Soups)',
+  id: 'base-sofrito', cat: 'previas',
+  nombre: 'Base de sabor: sofrito con CHOP + SAUTÉ',
   raciones: '3-4', racionesNum: 4, prep: 5, coccion: 6, dificultad: 'Fácil', programa: 'PRE-COOK',
-  principal: 'cebolla', tags: ['vegetariana', 'vegana'], pag: 7, tecnica: true,
+  principal: 'cebolla', tags: ['vegetariana', 'vegana'], tecnica: true,
   limiteMl: 1400,
   ing: [
     { c: 2, u: 'cda', n: 'aceite o mantequilla en total (oliva, coco, mantequilla, aguacate o girasol)' },
@@ -745,10 +754,10 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Introduce en la jarra el aceite o la mantequilla, la cebolla y las especias y aromáticos.' },
-    { b: 'CHOP', t: 'Picará groseramente los aromáticos.' },
-    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para liberar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { t: 'Ya tienes la base. Añade encima las verduras y el caldo y continúa con SMOOTH SOUP, CHUNKY SOUP o SAUCE, según la receta.' }
   ],
-  nota: 'Es la primera mitad (“FIRST — BUILD FLAVOUR”) de las plantillas oficiales de sopa del recetario Ninja, páginas 6–9. Es la preparación previa que usan casi todas las recetas de sopa y salsa de esta app.'
+  nota: 'No es un plato, es el arranque: la base de sabor que usan casi todas las sopas y salsas de la app. Después le añades la verdura y el caldo.'
 }
 ];

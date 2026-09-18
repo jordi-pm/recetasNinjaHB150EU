@@ -3,7 +3,7 @@ import type { Ingrediente, Receta } from '@/data/tipos';
 /* ---------------------------------------------------------------------------
    Cuánto sitio ocupa una receta en la jarra.
 
-   AVISO: es un cálculo de la app, NO un dato del manual de Ninja. Margen
+   AVISO: es un cálculo de la app, NO un dato del fabricante. Margen
    estimado ±20 %. Sirve para decidir si un escalado 2×/3× se saldría de la
    línea grabada; la línea de la jarra siempre manda sobre este número.
 

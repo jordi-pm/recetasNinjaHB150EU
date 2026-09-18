@@ -1,11 +1,10 @@
 import { Stack } from 'expo-router';
-import { abrirDocumento } from '@/lib/documentos';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { JugGauge } from '@/components/jug-gauge';
 import { PanelKey } from '@/components/panel-key';
 import { Callout, Card, SectionTitle } from '@/components/ui-kit';
-import { FUENTE_GUIA, FUENTE_MANUAL, MAQUINA } from '@/data/recetas';
+import { COMPATIBILIDAD, MAQUINA } from '@/data/recetas';
 import { usePalette } from '@/hooks/use-palette';
 import { FONT, RADIUS } from '@/theme/colors';
 
@@ -26,7 +25,7 @@ export default function Maquina() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Mi HB150EU' }} />
+      <Stack.Screen options={{ title: 'Mi aparato' }} />
       <ScrollView
         style={{ backgroundColor: c.bg }}
         contentInsetAdjustmentBehavior="automatic"
@@ -51,7 +50,7 @@ export default function Maquina() {
           </Callout>
         </Card>
 
-        <SectionTitle style={styles.st}>Programas Auto-iQ</SectionTitle>
+        <SectionTitle style={styles.st}>Programas automáticos</SectionTitle>
         <Card style={styles.pad}>
           {MAQUINA.programas.map((p: any) => (
             <FilaBoton
@@ -129,22 +128,13 @@ export default function Maquina() {
           ))}
         </Card>
 
-        <SectionTitle style={styles.st}>Fuentes oficiales</SectionTitle>
+        <SectionTitle style={styles.st}>{COMPATIBILIDAD.titulo}</SectionTitle>
         <Card style={styles.pad}>
-          <Text style={[styles.body, { color: c.textSoft }]}>
-            <Text style={{ fontWeight: '700' }}>Manual: </Text>
-            {FUENTE_MANUAL.nombre} ({FUENTE_MANUAL.ref})
+          <Text style={[styles.body, { color: c.textSoft }]}>{COMPATIBILIDAD.texto}</Text>
+          <Text style={[styles.body, { color: c.muted }]}>
+            Los avisos de seguridad de esta pantalla son los habituales de este tipo de aparato. Tu manual manda
+            sobre todo lo que leas aquí.
           </Text>
-          <Pressable onPress={() => abrirDocumento('manual', FUENTE_MANUAL.url)}>
-            <Text style={[styles.link, { color: c.tint }]}>Abrir manual (PDF) ›</Text>
-          </Pressable>
-          <Text style={[styles.body, { color: c.textSoft, marginTop: 10 }]}>
-            <Text style={{ fontWeight: '700' }}>Recetario: </Text>
-            {FUENTE_GUIA.nombre} ({FUENTE_GUIA.ref})
-          </Text>
-          <Pressable onPress={() => abrirDocumento('recetario', FUENTE_GUIA.url)}>
-            <Text style={[styles.link, { color: c.tint }]}>Abrir recetario (PDF) ›</Text>
-          </Pressable>
         </Card>
       </ScrollView>
     </>

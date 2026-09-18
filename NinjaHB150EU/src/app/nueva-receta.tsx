@@ -131,7 +131,7 @@ export default function NuevaReceta() {
           contentContainerStyle={styles.content}
           keyboardDismissMode="on-drag">
           <Callout tone="tip" title="Tus recetas van aparte">
-            Se guardan marcadas como tuyas, nunca mezcladas con las oficiales de Ninja. Los nombres de los botones
+            Se guardan marcadas como tuyas, separadas de las que trae la app. Los nombres de los botones
             se eligen de la lista real de tu panel.
           </Callout>
 

@@ -190,7 +190,7 @@ export default function Buscar() {
           <View style={styles.empty}>
             <Text style={{ fontSize: 40 }}>🔍</Text>
             <Text style={[styles.emptyTxt, { color: c.muted }]}>
-              Ninguna receta compatible con la HB150EU coincide con esa búsqueda.
+              Ninguna receta coincide con esa búsqueda.
             </Text>
           </View>
         }

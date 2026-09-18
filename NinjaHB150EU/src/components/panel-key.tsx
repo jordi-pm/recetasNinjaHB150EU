@@ -5,7 +5,7 @@ import type { BotonPanel } from '@/data/tipos';
 import { botonUsaCalor } from '@/lib/format';
 import { FONT } from '@/theme/colors';
 
-/** Réplica de una tecla del panel de la HB150EU. El LED va en ámbar
+/** Réplica de una tecla del panel. El LED va en ámbar
  *  cuando el programa usa calor (piloto HEAT ON) y en turquesa si no. */
 const AJUSTES = ['LOW', 'MED', 'HIGH'];
 

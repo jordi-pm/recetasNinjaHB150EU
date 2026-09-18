@@ -29,7 +29,7 @@ export default function TabsLayout() {
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="maquina">
-        <NativeTabs.Trigger.Label>Mi HB150EU</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Label>Mi aparato</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf={{ default: 'dial.medium', selected: 'dial.medium.fill' }} />
       </NativeTabs.Trigger>
     </NativeTabs>

@@ -1,7 +1,5 @@
-import { Image } from 'expo-image';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
-import { abrirDocumento } from '@/lib/documentos';
 import { useState } from 'react';
 import {
   Alert, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View,
@@ -10,8 +8,7 @@ import {
 import { JugGauge } from '@/components/jug-gauge';
 import { PanelKey } from '@/components/panel-key';
 import { Callout, Card, SectionTitle } from '@/components/ui-kit';
-import { fotoDe } from '@/data/fotos';
-import { FUENTE_GUIA, FUENTE_MANUAL } from '@/data/recetas';
+import { COMPATIBILIDAD } from '@/data/recetas';
 import { usePalette } from '@/hooks/use-palette';
 import {
   alergenosDe, cantidad, cargaMl, categoriaPorId, equivalencia, esCaliente, lineaNombre,
@@ -48,7 +45,6 @@ export default function RecetaDetalle() {
   const bloqueada = k > max;
   const carga = cargaMl(r, k);
   const aprieta = cargaMl(r, 1) > r.limiteMl;
-  const foto = fotoDe(r.foto);
   const cat = categoriaPorId(r.cat);
   const fav = esFav(r.id);
   const alergenos = alergenosDe(r);
@@ -80,19 +76,13 @@ export default function RecetaDetalle() {
         style={{ backgroundColor: c.bg }}
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}>
-        {foto ? (
-          <Image source={foto} style={styles.hero} contentFit="cover" transition={200} />
-        ) : (
-          <View style={[styles.hero, styles.heroPh, { backgroundColor: c.cardAlt }]}>
-            <Text style={{ fontSize: 56 }}>{cat?.emoji}</Text>
-          </View>
-        )}
+        <View style={[styles.hero, styles.heroPh, { backgroundColor: c.cardAlt }]}>
+          <Text style={{ fontSize: 64 }}>{cat?.emoji}</Text>
+        </View>
 
         <Text style={[styles.title, { color: c.text }]}>{r.nombre}</Text>
         <Text style={[styles.original, { color: c.muted }]}>
-          {r.propia ? 'Receta tuya' : r.original}
-          {r.plantilla ? ' · plantilla oficial' : ''}
-          {r.tecnica ? ' · técnica oficial' : ''}
+          {r.propia ? 'Receta tuya' : r.plantilla ? 'Plantilla: eliges tú los ingredientes' : r.tecnica ? 'Técnica de base' : 'Para batidora sopera'}
         </Text>
 
         {alergenos.length > 0 && (
@@ -228,7 +218,7 @@ export default function RecetaDetalle() {
 
               {aprieta && (
                 <Callout tone="hot" title="Ojo con el llenado">
-                  {`Nuestro cálculo da ~${(carga / 1000).toFixed(2).replace('.', ',')} L, por encima de la línea ${lineaNombre(r)}. Las cantidades son las oficiales de Ninja, así que probablemente van muy justas: ve echando el líquido hasta la línea grabada y guarda el resto en vez de forzar la jarra.`}
+                  {`Nuestro cálculo da ~${(carga / 1000).toFixed(2).replace('.', ',')} L, por encima de la línea ${lineaNombre(r)}. Las cantidades están pensadas para llenar la jarra, así que van muy justas: ve echando el líquido hasta la línea grabada y guarda el resto en vez de forzarla.`}
                 </Callout>
               )}
 
@@ -372,12 +362,12 @@ export default function RecetaDetalle() {
         </Card>
 
         {/* ------------------------------ fuente -------------------------- */}
-        <SectionTitle style={styles.st}>Fuente</SectionTitle>
+        <SectionTitle style={styles.st}>Sobre esta receta</SectionTitle>
         <Card style={styles.pad}>
           {r.propia ? (
             <>
               <Text style={[styles.body, { color: c.textSoft }]}>
-                Receta tuya, no del recetario oficial de Ninja. Los nombres de los botones sí salen del manual del HB150EU.
+                Receta tuya. Solo tú la ves y puedes editarla o borrarla cuando quieras.
               </Text>
               <Pressable
                 onPress={() =>
@@ -392,25 +382,12 @@ export default function RecetaDetalle() {
             </>
           ) : (
             <>
-              <Text style={[styles.body, { color: c.textSoft }]}>
-                <Text style={styles.b}>Fuente: </Text>{FUENTE_GUIA.nombre}, página {r.pag}.
+              <Text style={[styles.dt, { color: c.text }]}>{COMPATIBILIDAD.titulo}</Text>
+              <Text style={[styles.body, { color: c.textSoft }]}>{COMPATIBILIDAD.texto}</Text>
+              <Text style={[styles.body, { color: c.muted }]}>
+                El sitio que ocupa en la jarra lo calcula la app con densidades aproximadas (±20 %). Antes de
+                encender, mira la línea grabada en tu jarra: manda ella.
               </Text>
-              <Text style={[styles.body, { color: c.textSoft }]}>
-                <Text style={styles.b}>Modelo: </Text>Ninja Foodi Blender &amp; Soup Maker HB150EU.
-              </Text>
-              <Text style={[styles.body, { color: c.textSoft }]}>
-                <Text style={styles.b}>Nombres de los botones: </Text>{FUENTE_MANUAL.nombre}.
-              </Text>
-              <Text style={[styles.body, { color: c.textSoft }]}>
-                <Text style={styles.b}>Verificación: </Text>
-                {r.discrepancia ? 'verificada CON la discrepancia señalada arriba.' : 'ingredientes, cantidades y programa comprobados contra el recetario oficial.'}
-              </Text>
-              <Pressable onPress={() => abrirDocumento('recetario', FUENTE_GUIA.url)}>
-                <Text style={[styles.link, { color: c.tint }]}>Abrir el recetario original (PDF) ›</Text>
-              </Pressable>
-              <Pressable onPress={() => abrirDocumento('manual', FUENTE_MANUAL.url)}>
-                <Text style={[styles.link, { color: c.tint }]}>Abrir el manual original (PDF) ›</Text>
-              </Pressable>
             </>
           )}
         </Card>

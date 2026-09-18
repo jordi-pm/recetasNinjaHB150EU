@@ -97,7 +97,7 @@ export function nFiltros(f: Filtros): number {
 
 function textoDe(r: Receta): string {
   return norm([
-    r.nombre, r.original, r.principal, r.programa, r.cat, r.tags.join(' '),
+    r.nombre, r.principal, r.programa, r.cat, r.tags.join(" "),
     r.ing.map((i) => i.n).join(' '),
   ].join(' '));
 }
@@ -162,7 +162,7 @@ export function botonUsaCalor(b: BotonPanel): boolean {
   return b === 'COOK';
 }
 
-/** Duración del programa Auto-iQ, en minutos (derivada del recetario oficial). */
+/** Duración aproximada del programa automático, en minutos. */
 export function minutosDe(b: BotonPanel): number | null {
   const p = MAQUINA.programas.find((x) => x.b === b);
   return p ? p.minProg : null;
@@ -203,7 +203,7 @@ const ALERGENOS: [Alergeno, RegExp][] = [
   ['soja', /soja|tofu/],
 ];
 
-/** Deducidos de los ingredientes por la app. NO es un dato oficial de Ninja. */
+/** Deducidos de los ingredientes por la app. Orientativo, no una declaración de alérgenos. */
 export function alergenosDe(r: Receta): Alergeno[] {
   const texto = norm(r.ing.map((i) => i.n).join(' | '));
   return ALERGENOS.filter(([, re]) => re.test(texto)).map(([a]) => a);

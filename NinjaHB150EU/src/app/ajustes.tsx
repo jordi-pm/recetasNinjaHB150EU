@@ -1,10 +1,9 @@
 import { Stack, useRouter } from 'expo-router';
-import { abrirDocumento } from '@/lib/documentos';
 import { Alert, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 
 import { IconoTemaActual, SelectorTema } from '@/components/selector-tema';
 import { Card, SectionTitle } from '@/components/ui-kit';
-import { FUENTE_GUIA, FUENTE_MANUAL, RECETAS } from '@/data/recetas';
+import { COMPATIBILIDAD, RECETAS } from '@/data/recetas';
 import { usePalette } from '@/hooks/use-palette';
 import { useApp } from '@/lib/store';
 import { pedirPermisoAvisos } from '@/lib/temporizador';
@@ -124,20 +123,16 @@ export default function Ajustes() {
 
         <SectionTitle style={styles.st}>Acerca de</SectionTitle>
         <Card style={styles.pad}>
-          <Fila primera etiqueta="Aparato" valor="HB150EU" />
-          <Fila etiqueta="Recetas oficiales" valor={String(oficiales)} />
+          <Fila primera etiqueta="Para" valor="Batidora sopera" />
+          <Fila etiqueta="Recetas incluidas" valor={String(oficiales)} />
           <Fila etiqueta="Versión" valor="1.1.0" />
           <Text style={[styles.body, { color: c.muted, marginTop: 12 }]}>
-            Todas las recetas oficiales salen del manual y del recetario de la Ninja Foodi Blender &amp; Soup Maker
-            HB150EU. Ninguna procede de Air Fryer, Multicooker, Creami ni de otros modelos Ninja. Los cálculos de
-            volumen y los alérgenos los deduce la app y no son datos de Ninja.
+            {COMPATIBILIDAD.texto}
           </Text>
-          <Pressable onPress={() => abrirDocumento('manual', FUENTE_MANUAL.url)}>
-            <Text style={[styles.link, { color: c.tint }]}>Manual oficial (PDF) ›</Text>
-          </Pressable>
-          <Pressable onPress={() => abrirDocumento('recetario', FUENTE_GUIA.url)}>
-            <Text style={[styles.link, { color: c.tint }]}>Recetario oficial (PDF) ›</Text>
-          </Pressable>
+          <Text style={[styles.body, { color: c.muted }]}>
+            Los cálculos de volumen y los alérgenos los deduce la app y son orientativos. Guíate por la línea
+            grabada en tu jarra y por tu manual.
+          </Text>
         </Card>
       </ScrollView>
     </>

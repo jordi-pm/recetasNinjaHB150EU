@@ -13,7 +13,7 @@ const UTIL = H - INSET * 2;            // alto útil para la escala
 /** Altura en píxeles que ocupa un volumen, medida desde el fondo interior. */
 const nivel = (ml: number) => (Math.min(ml, MAX_ML) / MAX_ML) * UTIL;
 
-/** La jarra de la HB150EU con sus dos líneas grabadas (1,4 L HOT / 1,6 L COLD)
+/** La jarra con sus dos líneas grabadas (1,4 L HOT / 1,6 L COLD)
  *  y el nivel que alcanzaría la carga actual. Todo en la misma escala. */
 export function JugGauge({ cargaMl, limiteMl }: { cargaMl: number; limiteMl: number }) {
   const c = usePalette();

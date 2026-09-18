@@ -14,7 +14,7 @@ const BOTONES_REALES = new Set<string>([
   'BLEND', 'COOK', 'PULSE', 'CLEAN', 'POWER', 'LOW', 'MED', 'HIGH',
 ]);
 
-test('ninguna receta usa un botón que no exista en el panel del HB150EU', () => {
+test('ninguna receta usa un botón que no exista en el panel', () => {
   for (const r of RECETAS) {
     for (const p of r.pasos) {
       if (p.b) assert.ok(BOTONES_REALES.has(p.b), `${r.id}: botón inventado «${p.b}»`);

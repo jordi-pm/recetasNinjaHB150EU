@@ -1,10 +1,10 @@
 /* ---------------------------------------------------------------------------
    Tipos del modelo. La regla central del proyecto —solo botones que existen
-   de verdad en el panel del HB150EU— vive aquí como unión cerrada: inventarse
+   de verdad en el panel— vive aquí como unión cerrada: inventarse
    un programa deja de compilar.
 --------------------------------------------------------------------------- */
 
-/** Los 10 programas Auto-iQ impresos en el panel. */
+/** Los 10 programas automáticos impresos en el panel. */
 export type ProgramaAutoIQ =
   | 'SMOOTHIE' | 'DESSERT' | 'FROZEN DRINK' | 'MILKSHAKE'
   | 'SMOOTH SOUP' | 'CHUNKY SOUP' | 'JAM' | 'SAUCE'
@@ -42,7 +42,7 @@ export type Ingrediente = {
 
 export type Paso = {
   t?: string;
-  /** Botón EXACTO del panel del HB150EU. */
+  /** Botón EXACTO tal y como está impreso en el panel. */
   b?: BotonPanel;
   sub?: AjusteManual;
   /** Índices de `ing` que se cargan en la jarra en este paso. */
@@ -58,9 +58,7 @@ export type Paso = {
 export type Receta = {
   id: string;
   cat: CategoriaId;
-  foto: string | null;
   nombre: string;
-  original: string;
   raciones: number | string;
   /** Raciones como número, para escalar y ordenar. */
   racionesNum: number;
@@ -71,7 +69,6 @@ export type Receta = {
   programa: string;
   principal: string;
   tags: Etiqueta[];
-  pag: number;
   /** Línea de llenado que aplica: 1400 (HOT) o 1600 (COLD). */
   limiteMl: 1400 | 1600;
   ing: Ingrediente[];
