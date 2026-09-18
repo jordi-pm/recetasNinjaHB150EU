@@ -1,15 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { usePalette } from '@/hooks/use-palette';
+import type { BotonPanel } from '@/data/tipos';
 import { botonUsaCalor } from '@/lib/format';
 import { FONT } from '@/theme/colors';
 
 /** Réplica de una tecla del panel de la HB150EU. El LED va en ámbar
  *  cuando el programa usa calor (piloto HEAT ON) y en turquesa si no. */
-export function PanelKey({ label, size = 'md' }: { label: string; size?: 'sm' | 'md' | 'lg' }) {
+const AJUSTES = ['LOW', 'MED', 'HIGH'];
+
+export function PanelKey({ label, size = 'md' }: { label: BotonPanel | string; size?: 'sm' | 'md' | 'lg' }) {
   const c = usePalette();
-  const calor = botonUsaCalor(label);
-  const led = calor ? '#F0913F' : '#5CC2D6';
+  const esAjuste = AJUSTES.includes(label);
+  const calor = !esAjuste && botonUsaCalor(label as BotonPanel);
+  // Ámbar = enciende HEAT ON · turquesa = programa en frío · gris = ajuste
+  const led = esAjuste ? '#6C7683' : calor ? '#F0913F' : '#5CC2D6';
   const dims =
     size === 'lg'
       ? { padV: 14, padH: 20, font: 19, dot: 10, radius: 13 }
@@ -19,6 +24,13 @@ export function PanelKey({ label, size = 'md' }: { label: string; size?: 'sm' | 
 
   return (
     <View
+      accessible
+      accessibilityRole="image"
+      accessibilityLabel={
+        esAjuste
+          ? `Ajuste ${label} del panel`
+          : `Tecla ${label} del panel${calor ? ', usa calor' : ''}`
+      }
       style={[
         styles.key,
         {
@@ -36,12 +48,12 @@ export function PanelKey({ label, size = 'md' }: { label: string; size?: 'sm' | 
           borderRadius: dims.dot / 2,
           backgroundColor: led,
           shadowColor: led,
-          shadowOpacity: 0.9,
+          shadowOpacity: esAjuste ? 0 : 0.9,
           shadowRadius: 4,
           shadowOffset: { width: 0, height: 0 },
         }}
       />
-      <Text style={[styles.label, { fontSize: dims.font }]} allowFontScaling={false}>
+      <Text style={[styles.label, { fontSize: dims.font }]} maxFontSizeMultiplier={1.3}>
         {label}
       </Text>
     </View>

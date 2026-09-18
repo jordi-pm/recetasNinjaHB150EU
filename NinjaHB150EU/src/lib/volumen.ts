@@ -1,61 +1,75 @@
 import type { Ingrediente, Receta } from '@/data/tipos';
 
 /* ---------------------------------------------------------------------------
-   Cuánto sitio ocupa cada ingrediente en la jarra.
+   Cuánto sitio ocupa una receta en la jarra.
 
-   AVISO: esto es un cálculo de la app, NO un dato del manual de Ninja. Sirve
-   para decidir si un escalado 2×/3× se saldría de la línea grabada. Las
-   cantidades a 1× vienen del recetario oficial y se dan por buenas.
+   AVISO: es un cálculo de la app, NO un dato del manual de Ninja. Margen
+   estimado ±20 %. Sirve para decidir si un escalado 2×/3× se saldría de la
+   línea grabada; la línea de la jarra siempre manda sobre este número.
 
-   Las densidades son "densidad aparente": lo que ocupa el ingrediente tal y
-   como entra en la jarra, con sus huecos de aire. Por eso la coliflor en
-   ramilletes (0,40) ocupa mucho más de lo que pesa, y la espinaca cruda (0,15)
-   todavía más.
+   Modelo: los trozos sólidos dejan huecos entre sí, y el líquido los rellena
+   en vez de apilarse encima. Por eso el total NO es la suma de volúmenes
+   aparentes:
+
+     volumen real de un sólido = masa / densidad del material
+     volumen aparente (a granel) = volumen real / fracción de empaquetado
+     TOTAL = máx( Σ aparente de sólidos , Σ real de sólidos + Σ líquidos )
+
+   Con poco líquido manda el apilamiento de los trozos; con bastante líquido,
+   los trozos quedan sumergidos y solo desplazan su volumen real.
 --------------------------------------------------------------------------- */
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-/** g/ml aparentes. El primero que casa por palabra clave, gana: orden importa. */
-const DENSIDADES: [RegExp, number][] = [
+type Material = {
+  /** Densidad del material, sin aire (g/ml). */
+  ro: number;
+  /** Fracción de empaquetado: 1 = líquido o pasta sin huecos. */
+  empaque: number;
+};
+
+const LIQUIDO: Material = { ro: 1.0, empaque: 1 };
+
+/** El primer patrón que casa, gana: el orden importa. */
+const MATERIALES: [RegExp, Material][] = [
+  // líquidos y pastas (sin huecos de aire)
+  [/aceite/, { ro: 0.91, empaque: 1 }],
+  [/nata|leche|caldo|agua|zumo|vino|tequila|triple seco|sirope|yogur|pure de tomate/, LIQUIDO],
+  [/mayonesa|nata agria|queso crema|crema de cacahuete|concentrado de tomate|pasta de curry/, { ro: 1.0, empaque: 1 }],
+  [/mantequilla/, { ro: 0.91, empaque: 1 }],
+  [/pectina/, LIQUIDO],
+  [/helado/, { ro: 0.55, empaque: 1 }],
+  [/tomate entero pelado|tomate en lata/, { ro: 1.0, empaque: 1 }],
+  [/espinaca congelada.*escurrid|espinaca picada/, { ro: 1.0, empaque: 1 }],
+
   // hojas y verdura muy aireada
-  [/espinaca baby|espinaca fresca/, 0.15],
-  [/kale|hojas de kale/, 0.15],
-  [/coliflor/, 0.40],
-  [/brocoli/, 0.40],
-  [/champinon|shiitake|seta/, 0.35],
-  [/parmesano rallado|queso rallado/, 0.40],
-  // verdura en trozos de 2,5 cm
-  [/calabaza|boniato|patata|zanahoria|calabacin|apio|puerro|cebolla|chalota|pimiento/, 0.60],
-  [/tomate en lata|tomate entero pelado|tinned tomato/, 1.00],
-  [/alcachofa/, 0.70],
-  [/alubia|garbanzo|legumbre/, 0.75],
-  [/maiz/, 0.70],
-  [/espinaca congelada/, 0.90],
-  // fruta
-  [/fruta congelada|frutos rojos|arandano|mora|fresa|mango|pina|frambuesa/, 0.62],
-  [/platano|manzana/, 0.65],
-  // congelados varios
-  [/hielo|cubitos/, 0.60],
-  // grasas y líquidos
-  [/aceite/, 0.91],
-  [/mantequilla/, 0.91],
-  [/nata|leche|caldo|agua|zumo|vino|tequila|triple seco|sirope|yogur|suero/, 1.00],
-  [/queso crema/, 1.00],
-  [/mayonesa/, 0.94],
-  [/leche de coco/, 1.00],
+  [/espinaca baby|espinaca fresca/, { ro: 0.95, empaque: 0.16 }],
+  [/kale/, { ro: 0.95, empaque: 0.16 }],
+  [/coliflor|brocoli/, { ro: 0.95, empaque: 0.45 }],
+  [/champinon|shiitake|seta/, { ro: 0.95, empaque: 0.40 }],
+  [/parmesano rallado|queso rallado/, { ro: 1.1, empaque: 0.38 }],
+
+  // verdura y fruta en trozos
+  [/calabaza|boniato|patata|zanahoria|calabacin|apio|puerro|cebolla|chalota|pimiento|alcachofa/,
+    { ro: 1.0, empaque: 0.65 }],
+  [/manzana|platano|pina|mango/, { ro: 0.95, empaque: 0.65 }],
+  [/fresa|arandano|mora|frambuesa|frutos rojos|fruta congelada/, { ro: 0.95, empaque: 0.62 }],
+  [/maiz|alubia|garbanzo|legumbre/, { ro: 1.05, empaque: 0.62 }],
+  [/hielo|cubitos/, { ro: 0.92, empaque: 0.62 }],
+
   // secos y sólidos
-  [/azucar glas/, 0.55],
-  [/azucar/, 0.85],
-  [/pectina/, 1.00],
-  [/chocolate blanco|chips de chocolate|chocolate negro|chocolate con leche/, 0.75],
-  [/cacao en polvo/, 0.45],
-  [/anacardo|nuez|almendra|fruto seco/, 0.60],
-  [/crema de cacahuete/, 1.05],
-  [/fideos|macarron|pasta/, 0.45],
-  [/proteina en polvo/, 0.45],
-  [/caramelo/, 0.70],
-  [/helado/, 0.55],
-  [/pollo|ternera|pavo|cerdo|jamon|solomillo/, 0.90],
+  [/azucar glas/, { ro: 1.59, empaque: 0.35 }],
+  [/azucar/, { ro: 1.59, empaque: 0.55 }],
+  [/cacao en polvo/, { ro: 1.3, empaque: 0.35 }],
+  [/proteina en polvo/, { ro: 1.2, empaque: 0.35 }],
+  [/chocolate/, { ro: 1.3, empaque: 0.60 }],
+  [/anacardo|nuez|almendra|fruto seco/, { ro: 1.0, empaque: 0.60 }],
+  [/fideos|macarron|pasta/, { ro: 1.3, empaque: 0.35 }],
+  [/caramelo/, { ro: 1.4, empaque: 0.60 }],
+  [/pollo|ternera|pavo|cerdo|jamon|solomillo/, { ro: 1.05, empaque: 0.70 }],
+  [/ajo|jengibre/, { ro: 1.0, empaque: 0.60 }],
+  [/tomillo|romero|albahaca|perejil|cilantro|comino|sazonador|curry|sal|pimienta|especia|menta|vainilla/,
+    { ro: 0.5, empaque: 0.5 }],
 ];
 
 /** Gramos por unidad, para ingredientes contados en piezas. */
@@ -69,7 +83,7 @@ const PESOS: [RegExp, number][] = [
   [/patata/, 150],
   [/puerro/, 100],
   [/apio/, 40],
-  [/platano pequeno|platanos maduros pequenos/, 90],
+  [/platanos maduros pequenos|platano pequeno/, 90],
   [/platano/, 120],
   [/manzana/, 180],
   [/caramelo/, 3],
@@ -78,60 +92,112 @@ const PESOS: [RegExp, number][] = [
   [/lata/, 400],
 ];
 
-const ML_POR_UNIDAD: Record<string, number> = { cda: 15, cdta: 5 };
+const ML_CUCHARA: Record<string, number> = { cda: 15, cdta: 5 };
 
-const busca = (tabla: [RegExp, number][], nombre: string, porDefecto: number) => {
+function materialDe(nombre: string): Material {
   const n = norm(nombre);
-  for (const [re, v] of tabla) if (re.test(n)) return v;
-  return porDefecto;
+  for (const [re, m] of MATERIALES) if (re.test(n)) return m;
+  return { ro: 1.0, empaque: 0.65 };
+}
+
+/** Gramos por pieza cuando la unidad ya dice de qué pieza hablamos. */
+const PESO_POR_UNIDAD: Record<string, number> = {
+  diente: 5,      // diente de ajo
+  rama: 40,       // rama de apio
+  hoja: 0.3,      // hoja de menta
+  cacito: 30,     // cacito de proteína
+  lata: 400,      // lata de 400 g, como las da el recetario
 };
 
-export const densidadDe = (nombre: string) => busca(DENSIDADES, nombre, 0.70);
-export const pesoUnidadDe = (nombre: string) => busca(PESOS, nombre, 100);
+function pesoUnidadDe(nombre: string, unidad: string): number {
+  const porUnidad = PESO_POR_UNIDAD[unidad];
+  if (porUnidad !== undefined) return porUnidad;
+  const n = norm(nombre);
+  for (const [re, g] of PESOS) if (re.test(n)) return g;
+  return 100;
+}
 
-/** Volumen aparente en ml que ocupa este ingrediente en la jarra. */
-export function volumenMl(ing: Ingrediente, k = 1): number {
-  if (ing.fuera) return 0;
-  if (ing.mlForzado !== undefined) return ing.mlForzado * k;
-  if (ing.c === null) return 0;
+type Aporte = { real: number; aparente: number };
+
+/** Volumen real y aparente (ml) que aporta un ingrediente a escala k. */
+export function aporte(ing: Ingrediente, k = 1): Aporte {
+  if (ing.fuera || ing.c === null) return { real: 0, aparente: 0 };
+  if (ing.mlForzado !== undefined) {
+    const v = ing.mlForzado * k;
+    return { real: v, aparente: v };
+  }
   const c = ing.c * k;
+  const mat = materialDe(ing.n);
+
+  let gramos: number | null = null;
+  let ml: number | null = null;
 
   switch (ing.u) {
     case 'ml':
-      return c;
+      ml = c;
+      break;
     case 'g':
-      return c / densidadDe(ing.n);
+      gramos = c;
+      break;
     case 'cda':
     case 'cdta':
-      return c * ML_POR_UNIDAD[ing.u] * (densidadDe(ing.n) >= 0.9 ? 1 : 1);
+      ml = c * ML_CUCHARA[ing.u];
+      break;
     case 'ud':
     case 'diente':
     case 'rama':
     case 'hoja':
     case 'cacito':
     case 'lata':
-      return (c * pesoUnidadDe(ing.n)) / densidadDe(ing.n);
+      gramos = c * pesoUnidadDe(ing.n, ing.u);
+      break;
     default:
-      return 0;
+      return { real: 0, aparente: 0 };
   }
+
+  if (ml !== null) {
+    // Medido en volumen: ya es el volumen que ocupa.
+    return { real: ml, aparente: ml / (mat.empaque === 1 ? 1 : mat.empaque) };
+  }
+  const real = gramos! / mat.ro;
+  return { real, aparente: real / mat.empaque };
 }
+
+const esLiquido = (ing: Ingrediente) => materialDe(ing.n).empaque === 1;
 
 /** Carga total de la receta a escala k, en ml. */
 export function cargaMl(r: Receta, k = 1): number {
-  return Math.round(r.ing.reduce((t, ing) => t + volumenMl(ing, k), 0));
+  let aparenteSolidos = 0;
+  let realSolidos = 0;
+  let liquidos = 0;
+
+  r.ing.forEach((ing) => {
+    const a = aporte(ing, k);
+    if (esLiquido(ing)) liquidos += a.real;
+    else {
+      aparenteSolidos += a.aparente;
+      realSolidos += a.real;
+    }
+  });
+
+  return Math.round(Math.max(aparenteSolidos, realSolidos + liquidos));
 }
 
-/** Máximo múltiplo que sigue cabiendo bajo la línea que aplica. */
+/** Máximo múltiplo que sigue cabiendo bajo la línea que aplica (1..3). */
 export function maxEscala(r: Receta): number {
-  const base = cargaMl(r, 1);
-  if (base <= 0) return 3;
-  return Math.max(1, Math.min(3, Math.floor(r.limiteMl / base)));
+  for (let k = 3; k >= 2; k--) if (cargaMl(r, k) <= r.limiteMl) return k;
+  return 1;
 }
 
-/** Desglose para enseñar de dónde sale el número. */
+/** ¿La estimación a 1× ya roza o pasa la línea grabada? */
+export function aprietaA1x(r: Receta): boolean {
+  return cargaMl(r, 1) > r.limiteMl;
+}
+
+/** Desglose, para poder enseñar de dónde sale el número. */
 export function desglose(r: Receta, k = 1) {
   return r.ing
-    .map((ing, i) => ({ i, ing, ml: Math.round(volumenMl(ing, k)) }))
+    .map((ing, i) => ({ i, ing, ml: Math.round(aporte(ing, k).real), liquido: esLiquido(ing) }))
     .filter((x) => x.ml > 0)
     .sort((a, b) => b.ml - a.ml);
 }

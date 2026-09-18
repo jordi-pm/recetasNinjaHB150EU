@@ -23,12 +23,12 @@ export const MAQUINA = {
     { b: 'DESSERT',      seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Usa fruta congelada y lácteos para hacer sorbetes y postres helados.' },
     { b: 'FROZEN DRINK', seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Tritura hielo y fruta congelada para bebidas heladas de coctelería.' },
     { b: 'MILKSHAKE',    seccion: 'BLEND', calor: false, minProg: 1, dur: '1 min', d: 'Bate leche y tus sabores favoritos para un batido espumoso.' },
-    { b: 'SMOOTH SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Cocina y tritura tus cremas suaves favoritas.' },
-    { b: 'CHUNKY SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Prepara sopa casera con más textura.' },
+    { b: 'SMOOTH SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', fases: ['Precalienta hasta que rompe a hervir', 'Pulsa y remueve para cocinar de forma uniforme', 'Tritura hasta dejar una crema fina'], d: 'Cocina y tritura tus cremas suaves favoritas.' },
+    { b: 'CHUNKY SOUP',  seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', fases: ['Precalienta hasta que rompe a hervir', 'Pulsa y remueve suavemente para cocinar de forma uniforme'], d: 'Prepara sopa casera con más textura.' },
     { b: 'JAM',          seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Haz tus propias mermeladas con textura, o cuélalas después para un resultado fino.' },
     { b: 'SAUCE',        seccion: 'COOK', calor: true, minProg: 30, dur: '≈30 min', d: 'Crea salsas dulces o saladas y fondues.' },
-    { b: 'CHOP',         seccion: 'PRE-COOK', calor: false, minProg: 0.25, dur: 'unos segundos', d: 'Pica rápidamente los ingredientes antes de hacer sopas, salsas y dips.' },
-    { b: 'SAUTÉ',        seccion: 'PRE-COOK', calor: true, minProg: 5, dur: '≈5 min', d: 'Saca más sabor cocinando cebolla, ajo, especias y más antes de hacer una sopa, salsa o dip.' }
+    { b: 'CHOP',         seccion: 'PRE-COOK', calor: false, minProg: 0.25, dur: 'unos segundos', fases: ['Da pulsos cortos para picar groseramente los aromáticos'], d: 'Pica rápidamente los ingredientes antes de hacer sopas, salsas y dips.' },
+    { b: 'SAUTÉ',        seccion: 'PRE-COOK', calor: true, minProg: 5, dur: '≈5 min', fases: ['Cocina 5 minutos para soltar el sabor de los aromáticos'], d: 'Saca más sabor cocinando cebolla, ajo, especias y más antes de hacer una sopa, salsa o dip.' }
   ],
   manual: [
     { b: 'BLEND', opciones: 'LOW · MED · HIGH · PULSE', d: 'Selecciona BLEND y después tu velocidad. LOW, MED y HIGH funcionan 60 segundos o hasta que lo pares manualmente. PULSE solo funciona mientras mantienes pulsado el botón.' },
@@ -129,11 +129,11 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2] },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine (unos 5 minutos).' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [3, 4, 5, 6, 7], t: 'Añade el resto de ingredientes en el orden indicado.' },
-    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Pulsa COOK y después HIGH.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
-    { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Pulsa BLEND y después HIGH, hasta la textura que quieras.' },
+    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Cocerá a temperatura alta.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
+    { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
     { t: 'Sirve.' }
   ],
   tip: 'Para una sopa aún más fina, tritura otro minuto. Añade copos de chile para un toque picante.'
@@ -160,10 +160,10 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5] },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [6, 7, 8, 9, 10, 11], t: 'Añade el resto de ingredientes.' },
-    { b: 'SMOOTH SOUP', t: 'Pulsa SMOOTH SOUP y espera a que termine el programa.' },
+    { b: 'SMOOTH SOUP', t: 'Precalentará hasta hervir, removerá y al final lo triturará hasta dejar la crema fina.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
@@ -187,10 +187,10 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2] },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [3, 4, 5, 6, 7, 8, 9], t: 'Añade el resto de ingredientes.' },
-    { b: 'SMOOTH SOUP', t: 'Pulsa SMOOTH SOUP y espera a que termine el programa.' },
+    { b: 'SMOOTH SOUP', t: 'Precalentará hasta hervir, removerá y al final lo triturará hasta dejar la crema fina.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   nota: 'Esta receta es la que más se acerca a la línea HOT (1,4 L). No añadas líquido extra.'
@@ -213,7 +213,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5, 6], t: 'Introduce en la jarra todos los ingredientes EXCEPTO los fideos.' },
-    { b: 'CHUNKY SOUP', t: 'Pulsa CHUNKY SOUP.' },
+    { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves.' },
     { add: [7], faltan: 6, t: 'Añade los fideos de huevo.', aviso: 'Al abrir sale vapor: manos en las pestañas exteriores y levanta la tapa en vertical.' },
     { t: 'Sirve inmediatamente.' }
   ]
@@ -238,11 +238,11 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3] },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [4, 5, 6, 7, 8, 9], t: 'Añade el resto de ingredientes en el orden indicado.' },
-    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Pulsa COOK y después HIGH.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
-    { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Pulsa BLEND y después HIGH, hasta la textura que quieras.' },
+    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Cocerá a temperatura alta.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
+    { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
     { t: 'Sirve.' }
   ],
   tip: 'Para una crema aún más fina, tritura otro minuto.'
@@ -264,11 +264,11 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3] },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [4, 5, 6], t: 'Cuando el programa haya terminado, añade el resto de ingredientes.' },
-    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Pulsa COOK y después HIGH.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
-    { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Pulsa BLEND y después HIGH, hasta la textura que quieras.' },
+    { b: 'COOK', sub: 'HIGH', min: 14, t: 'Cocerá a temperatura alta.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
+    { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
     { t: 'Sirve.' }
   ],
   tip: 'Para una crema aún más fina, tritura otro minuto.'
@@ -293,7 +293,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'CHUNKY SOUP', t: 'Pulsa CHUNKY SOUP y espera a que termine el programa.' },
+    { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves, dejando los trozos enteros.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
@@ -322,12 +322,12 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce en la jarra el aceite de oliva, la cebolla, el ajo y la sal.' },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [4, 5, 6, 7, 8, 9, 10, 11], t: 'Añade el tomate, el kale, el parmesano, el caldo, el concentrado de tomate, el romero, la pimienta negra y el tomillo.' },
-    { b: 'CHUNKY SOUP', t: 'Pulsa CHUNKY SOUP.' },
+    { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves.' },
     { add: [12], faltan: 6, t: 'Añade las alubias blancas.', aviso: 'Al abrir sale vapor: manos en las pestañas exteriores y levanta la tapa en vertical.' },
-    { b: 'CHUNKY SOUP', t: 'Coloca la tapa y pulsa CHUNKY SOUP otra vez para reiniciar el programa.' },
+    { b: 'CHUNKY SOUP', t: 'Coloca la tapa y reinicia el programa.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   discrepancia: 'La receta oficial tiene incoherencias: la lista de ingredientes incluye apio y zanahoria que no aparecen en los pasos; los pasos mencionan aceite de oliva sin darlo en la lista, y piden añadir “garbanzos” que tampoco figuran en la lista. Aquí se reproduce tal cual, sin inventar cantidades: usa el aceite que necesites para el sofrito y omite los garbanzos, o añádelos junto a las alubias bajo tu criterio.'
@@ -342,17 +342,17 @@ export const RECETAS: Receta[] = [
     { c: 2, u: 'cda', n: 'aceite o mantequilla en total (oliva, coco, mantequilla, aguacate o girasol)' },
     { c: 1, u: 'ud', n: 'cebolla pequeña o chalota, pelada y en cuartos' },
     { c: 3, u: 'cdta', n: 'especias y aromáticos en total (ajo, jengibre, tomillo, sal, pimienta, semillas de cilantro, semillas de comino, concentrado de tomate)' },
-    { c: 230, u: 'g', n: 'verdura en total, en trozos de 2,5 cm (zanahoria, patata, boniato, coliflor, brócoli, tomate, calabaza, apio, espinaca, kale, maíz, pimiento)' },
-    { c: 125, u: 'g', n: 'proteína en total, en trozos de 2,5 cm — opcional (solomillo de ternera, pechuga de pollo, pechuga de pavo, lomo de cerdo, jamón)' },
+    { c: 230, u: 'g', n: 'verdura en total, en trozos de 2,5 cm (zanahoria, patata, boniato, coliflor, brócoli, tomate, calabaza, apio, espinaca, kale, maíz, pimiento)', mlForzado: 230 },
+    { c: 125, u: 'g', n: 'proteína en total, en trozos de 2,5 cm — opcional (solomillo de ternera, pechuga de pollo, pechuga de pavo, lomo de cerdo, jamón)', mlForzado: 120 },
     { c: 750, u: 'ml', n: 'base líquida en total (agua, caldo de verduras, caldo de ternera, leche de coco, caldo de pollo, puré de tomate)' },
-    { c: 75, u: 'g', n: 'pasta y/o legumbres en total — opcional, 38 g de cada una (macarrones, fideos de huevo, garbanzos, alubias blancas, alubias negras)' }
+    { c: 75, u: 'g', n: 'pasta y/o legumbres en total — opcional, 38 g de cada una (macarrones, fideos de huevo, garbanzos, alubias blancas, alubias negras)', mlForzado: 70 }
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Construye el sabor: introduce el aceite o la mantequilla, la cebolla y las especias y aromáticos.' },
-    { b: 'CHOP', t: 'Pulsa CHOP. La batidora picará groseramente los aromáticos.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ. La batidora cocinará 5 minutos para liberar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para liberar el sabor de los aromáticos.' },
     { add: [3, 4, 5], t: 'Añade la verdura, la proteína (si la usas) y la base líquida.' },
-    { b: 'CHUNKY SOUP', t: 'Pulsa CHUNKY SOUP. La batidora precalentará hasta hervir y después removerá con pulsos suaves para cocinar de forma uniforme.' },
+    { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves para cocinar de forma uniforme.' },
     { add: [6], faltan: 6, t: 'Si usas legumbres, añádelas ahora. Si usas pasta, sigue el tiempo del paquete.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
@@ -368,15 +368,15 @@ export const RECETAS: Receta[] = [
     { c: 2, u: 'cda', n: 'aceite o mantequilla en total (oliva, coco, mantequilla, aguacate o girasol)' },
     { c: 1, u: 'ud', n: 'cebolla pequeña o chalota, pelada y en cuartos' },
     { c: 3, u: 'cdta', n: 'especias y aromáticos en total (ajo, jengibre, tomillo, sal, pimienta, semillas de cilantro, semillas de comino, concentrado de tomate)' },
-    { c: 460, u: 'g', n: 'verdura en total, en trozos de 2,5 cm (zanahoria, patata, boniato, coliflor, brócoli, tomate, calabaza, apio, espinaca, kale, champiñón, maíz, pimiento)' },
+    { c: 460, u: 'g', n: 'verdura en total, en trozos de 2,5 cm (zanahoria, patata, boniato, coliflor, brócoli, tomate, calabaza, apio, espinaca, kale, champiñón, maíz, pimiento)', mlForzado: 460 },
     { c: 1000, u: 'ml', n: 'base líquida en total (agua, caldo de verduras, caldo de ternera, leche de coco, caldo de pollo, puré de tomate)' }
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Construye el sabor: introduce el aceite o la mantequilla, la cebolla y las especias y aromáticos.' },
-    { b: 'CHOP', t: 'Pulsa CHOP. La batidora picará groseramente los aromáticos.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ. La batidora cocinará 5 minutos para liberar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para liberar el sabor de los aromáticos.' },
     { add: [3, 4], t: 'Añade la verdura y la base líquida.' },
-    { b: 'SMOOTH SOUP', t: 'Pulsa SMOOTH SOUP. La batidora precalentará hasta hervir, removerá para cocinar de forma uniforme y después lo triturará hasta dejar una crema fina.' },
+    { b: 'SMOOTH SOUP', t: 'Precalentará hasta hervir, removerá para cocinar de forma uniforme y después lo triturará hasta dejar una crema fina.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   tip: 'Consejo oficial: añade un par de chorritos de nata al final del programa para una textura más cremosa.',
@@ -400,10 +400,10 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce en la jarra el aceite de oliva, la cebolla, el ajo, la pimienta negra y la sal.' },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [4, 5, 6], t: 'Añade el resto de ingredientes SIN pasar de la línea HOT (1,4 L) de la jarra.' },
-    { b: 'SAUCE', t: 'Pulsa SAUCE y espera a que termine el programa.' },
+    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   discrepancia: 'La receta oficial pide 4 latas de 400 g de tomate (unos 1,6 L solo de tomate), pero el manual prohíbe pasar de la línea HOT de 1,4 L en los modos con calor. La app NO resuelve la contradicción por su cuenta: fíjate en la línea grabada de tu jarra y reduce la cantidad de tomate hasta no superarla.'
@@ -423,10 +423,10 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1] },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [2, 3, 4], t: 'Añade el resto de ingredientes.' },
-    { b: 'SAUCE', t: 'Pulsa SAUCE y espera a que termine el programa.' },
+    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
@@ -449,7 +449,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5, 6, 7, 8], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'SAUCE', t: 'Pulsa SAUCE y espera a que termine el programa.' },
+    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
     { t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
@@ -469,8 +469,8 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'JAM', t: 'Pulsa JAM y espera a que termine el programa.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'JAM', t: 'Cocerá la fruta con el azúcar hasta que espese, unos 30 minutos.' },
     { t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
   ]
 },
@@ -488,8 +488,8 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'JAM', t: 'Pulsa JAM y espera a que termine el programa.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'JAM', t: 'Cocerá la fruta con el azúcar hasta que espese, unos 30 minutos.' },
     { t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
   ]
 },
@@ -509,7 +509,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'FROZEN DRINK', t: 'Pulsa FROZEN DRINK y espera a que termine el programa.' },
+    { b: 'FROZEN DRINK', t: 'Picará el hielo y la fruta congelada durante un minuto.' },
     { t: 'Sirve.' }
   ]
 },
@@ -526,7 +526,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'FROZEN DRINK', t: 'Pulsa FROZEN DRINK y espera a que termine el programa.' },
+    { b: 'FROZEN DRINK', t: 'Picará el hielo y la fruta congelada durante un minuto.' },
     { t: 'Sirve.' }
   ]
 },
@@ -544,7 +544,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'SMOOTHIE', t: 'Pulsa SMOOTHIE y espera a que termine el programa (unos 45 segundos).' },
+    { b: 'SMOOTHIE', t: 'Triturará unos 45 segundos, alternando pulsos y velocidad.' },
     { t: 'Sirve.' }
   ]
 },
@@ -562,7 +562,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'SMOOTHIE', t: 'Pulsa SMOOTHIE y espera a que termine el programa (unos 45 segundos).' },
+    { b: 'SMOOTHIE', t: 'Triturará unos 45 segundos, alternando pulsos y velocidad.' },
     { t: 'Sirve.' }
   ]
 },
@@ -580,7 +580,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'MILKSHAKE', t: 'Pulsa MILKSHAKE y espera a que termine el programa.' },
+    { b: 'MILKSHAKE', t: 'Batirá un minuto hasta dejarlo espumoso.' },
     { t: 'Sirve.' }
   ]
 },
@@ -598,7 +598,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
-    { b: 'MILKSHAKE', t: 'Pulsa MILKSHAKE y espera a que termine el programa.' },
+    { b: 'MILKSHAKE', t: 'Batirá un minuto hasta dejarlo espumoso.' },
     { t: 'Sirve.' }
   ]
 },
@@ -617,10 +617,10 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Introduce en la jarra el chocolate, la leche y el cacao en polvo.' },
-    { b: 'CHOP', t: 'Pulsa CHOP y espera a que termine.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ y espera a que termine.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos, en unos segundos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para soltar el sabor de los aromáticos.' },
     { add: [3, 4], t: 'Cuando el programa haya terminado, añade la nata y el hielo.', aviso: 'La jarra está caliente: usa manoplas y agárrala solo por el asa.' },
-    { b: 'FROZEN DRINK', t: 'Pulsa FROZEN DRINK y espera a que termine el programa.' },
+    { b: 'FROZEN DRINK', t: 'Picará el hielo y la fruta congelada durante un minuto.' },
     { t: 'Sirve.' }
   ]
 },
@@ -641,8 +641,8 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce en la jarra la leche, la nata líquida, los chips de chocolate y la crema de cacahuete.' },
-    { b: 'COOK', sub: 'MED', min: 20, t: 'Pulsa COOK y después MED.' },
-    { b: 'PULSE', min: 5, t: 'Pulsa PULSE para remover. Repítelo cada 5 minutos mientras cuece.' },
+    { b: 'COOK', sub: 'MED', min: 20, t: 'Cocerá a temperatura media.' },
+    { b: 'PULSE', min: 5, t: 'Remueve con un pulso corto. Repítelo cada 5 minutos mientras cuece.' },
     { add: [4, 5], t: 'Sirve y decora con mini nubes y sirope de chocolate, al gusto.' }
   ]
 },
@@ -662,8 +662,8 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1], t: 'Introduce en la jarra los chips de chocolate y la nata.' },
-    { b: 'PULSE', t: 'Pulsa PULSE 5 veces.' },
-    { b: 'SAUCE', t: 'Pulsa SAUCE y espera a que termine el programa.' },
+    { b: 'PULSE', t: 'Cinco pulsos cortos para romper el chocolate.' },
+    { b: 'SAUCE', t: 'Cocinará a fuego suave removiendo sola, unos 30 minutos.' },
     { t: 'Sirve la fondue caliente con pretzels, nubes, fresas u otra fruta, al gusto.' }
   ]
 },
@@ -682,7 +682,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'DESSERT', t: 'Pulsa DESSERT.' },
+    { b: 'DESSERT', t: 'Triturará un minuto hasta dejar textura de helado.' },
     { t: 'Mientras el programa está en marcha, usa el tamper para empujar los ingredientes hacia las cuchillas. El tamper solo se usa con la tapa puesta, sustituyendo al tapón central.' },
     { t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ]
@@ -703,7 +703,7 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2, 3, 4, 5], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
-    { b: 'DESSERT', t: 'Pulsa DESSERT.' },
+    { b: 'DESSERT', t: 'Triturará un minuto hasta dejar textura de helado.' },
     { t: 'Mientras el programa está en marcha, usa el tamper para empujar los ingredientes hacia las cuchillas.' },
     { t: 'Saca el sorbete de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ]
@@ -725,7 +725,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1], t: 'Mezcla la nata con la leche evaporada. Viértelo en cubiteras y congela 8 horas o toda la noche.' },
     { add: [2, 3, 4, 5], t: 'Introduce en la jarra los caramelos de menta, el azúcar glas, el extracto de menta, la leche entera y los cubitos de nata congelada.' },
-    { b: 'DESSERT', t: 'Pulsa DESSERT.' },
+    { b: 'DESSERT', t: 'Triturará un minuto hasta dejar textura de helado.' },
     { t: 'Mientras el programa está en marcha, usa el tamper para empujar los ingredientes hacia las cuchillas.' },
     { t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ],
@@ -745,8 +745,8 @@ export const RECETAS: Receta[] = [
   ],
   pasos: [
     { add: [0, 1, 2], t: 'Introduce en la jarra el aceite o la mantequilla, la cebolla y las especias y aromáticos.' },
-    { b: 'CHOP', t: 'Pulsa CHOP. La batidora picará groseramente los aromáticos.' },
-    { b: 'SAUTÉ', t: 'Pulsa SAUTÉ. La batidora cocinará 5 minutos para liberar el sabor de los aromáticos.' },
+    { b: 'CHOP', t: 'Picará groseramente los aromáticos.' },
+    { b: 'SAUTÉ', t: 'Sofreirá 5 minutos para liberar el sabor de los aromáticos.' },
     { t: 'Ya tienes la base. Añade encima las verduras y el caldo y continúa con SMOOTH SOUP, CHUNKY SOUP o SAUCE, según la receta.' }
   ],
   nota: 'Es la primera mitad (“FIRST — BUILD FLAVOUR”) de las plantillas oficiales de sopa del recetario Ninja, páginas 6–9. Es la preparación previa que usan casi todas las recetas de sopa y salsa de esta app.'

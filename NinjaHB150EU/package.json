@@ -6,15 +6,19 @@
     "@expo/ui": "~57.0.18",
     "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~57.0.23",
+    "expo-audio": "~57.0.5",
     "expo-constants": "~57.0.18",
     "expo-device": "~57.0.2",
+    "expo-file-system": "~57.0.7",
     "expo-font": "~57.0.4",
     "expo-glass-effect": "~57.0.3",
     "expo-haptics": "~57.0.3",
     "expo-image": "~57.0.5",
     "expo-keep-awake": "~57.0.2",
     "expo-linking": "~57.0.10",
+    "expo-notifications": "~57.0.20",
     "expo-router": "~57.0.21",
+    "expo-sharing": "~57.0.21",
     "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.3",
@@ -31,7 +35,9 @@
     "react-native-worklets": "0.10.1"
   },
   "devDependencies": {
+    "@types/node": "^26.6.1",
     "@types/react": "~19.2.2",
+    "tsx": "^4.23.13",
     "typescript": "~6.0.3"
   },
   "scripts": {
@@ -40,7 +46,10 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "test": "tsx --test scripts/tests.ts",
+    "check:volumen": "tsx scripts/check-volumen.ts",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p scripts"
   },
   "private": true
 }

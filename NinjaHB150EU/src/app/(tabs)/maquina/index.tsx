@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import * as WebBrowser from 'expo-web-browser';
+import { abrirDocumento } from '@/lib/documentos';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { JugGauge } from '@/components/jug-gauge';
@@ -135,14 +135,14 @@ export default function Maquina() {
             <Text style={{ fontWeight: '700' }}>Manual: </Text>
             {FUENTE_MANUAL.nombre} ({FUENTE_MANUAL.ref})
           </Text>
-          <Pressable onPress={() => WebBrowser.openBrowserAsync(FUENTE_MANUAL.url)}>
+          <Pressable onPress={() => abrirDocumento('manual', FUENTE_MANUAL.url)}>
             <Text style={[styles.link, { color: c.tint }]}>Abrir manual (PDF) ›</Text>
           </Pressable>
           <Text style={[styles.body, { color: c.textSoft, marginTop: 10 }]}>
             <Text style={{ fontWeight: '700' }}>Recetario: </Text>
             {FUENTE_GUIA.nombre} ({FUENTE_GUIA.ref})
           </Text>
-          <Pressable onPress={() => WebBrowser.openBrowserAsync(FUENTE_GUIA.url)}>
+          <Pressable onPress={() => abrirDocumento('recetario', FUENTE_GUIA.url)}>
             <Text style={[styles.link, { color: c.tint }]}>Abrir recetario (PDF) ›</Text>
           </Pressable>
         </Card>
@@ -152,7 +152,7 @@ export default function Maquina() {
 }
 
 const styles = StyleSheet.create({
-  content: { paddingHorizontal: 16, paddingBottom: 40 },
+  content: { paddingHorizontal: 16, maxWidth: 720, width: '100%', alignSelf: 'center', paddingBottom: 40 },
   hero: { borderRadius: RADIUS, padding: 18, gap: 6, marginBottom: 26 },
   heroTitle: { color: '#FFF', fontSize: 21, fontWeight: '700', lineHeight: 26, letterSpacing: -0.3 },
   heroSub: { color: '#9DABB9', fontSize: 13, lineHeight: 19 },

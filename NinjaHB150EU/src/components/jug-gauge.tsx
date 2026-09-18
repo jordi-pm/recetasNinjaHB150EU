@@ -23,7 +23,7 @@ export function JugGauge({ cargaMl, limiteMl }: { cargaMl: number; limiteMl: num
   const Linea = ({ ml, color, label }: { ml: number; color: string; label: string }) => (
     <View style={[styles.linea, { bottom: INSET + nivel(ml) }]} pointerEvents="none">
       <View style={{ width: W, height: 1.5, backgroundColor: color }} />
-      <Text style={[styles.lineaLabel, { color }]} allowFontScaling={false}>
+      <Text style={[styles.lineaLabel, { color }]} maxFontSizeMultiplier={1.3}>
         {label}
       </Text>
     </View>
