@@ -7,6 +7,7 @@ import { JugGauge } from '@/components/jug-gauge';
 import { Callout, Card, SectionTitle } from '@/components/ui-kit';
 import type { Ingrediente, Unidad } from '@/data/tipos';
 import { usePalette } from '@/hooks/use-palette';
+import { useApp } from '@/lib/store';
 import { aporte } from '@/lib/volumen';
 import { FONT, RADIUS } from '@/theme/colors';
 
@@ -17,10 +18,11 @@ type Fila = { id: number; n: string; c: string; u: Unidad };
 /** «¿Me cabe esto en la jarra?» para cuando cocinas sin receta. */
 export default function Cabe() {
   const c = usePalette();
+  const { aparato } = useApp();
   const [caliente, setCaliente] = useState(true);
   const [filas, setFilas] = useState<Fila[]>([{ id: 1, n: '', c: '', u: 'g' }]);
 
-  const limite = caliente ? 1400 : 1600;
+  const limite = caliente ? aparato.calienteMl : aparato.frioMl;
 
   const total = useMemo(() => {
     let aparenteSolidos = 0, realSolidos = 0, liquidos = 0;
@@ -59,7 +61,7 @@ export default function Cabe() {
             ninguna receta.
           </Text>
           <View style={styles.seg}>
-            {([[true, '🔥 Con calor · HOT 1,4 L'], [false, '🧊 En frío · COLD 1,6 L']] as const).map(([v, t]) => (
+            {([[true, `🔥 Con calor · ${aparato.calienteMl} ml`], [false, `🧊 En frío · ${aparato.frioMl} ml`]] as const).map(([v, t]) => (
               <Pressable
                 key={String(v)}
                 onPress={() => setCaliente(v)}
@@ -124,7 +126,7 @@ export default function Cabe() {
                 )}
               </Text>
               <Text style={[styles.body, { color: c.muted }]}>
-                {pct}% de la línea {caliente ? 'HOT (1,4 L)' : 'COLD (1,6 L)'}
+                {pct}% de la línea {caliente ? 'HOT' : 'COLD'} ({limite} ml)
               </Text>
             </View>
           </View>

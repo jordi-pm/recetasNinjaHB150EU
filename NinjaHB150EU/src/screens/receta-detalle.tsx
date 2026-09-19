@@ -1,3 +1,5 @@
+import * as ImagePicker from 'expo-image-picker';
+import { Image } from 'expo-image';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
 import { useState } from 'react';
@@ -12,9 +14,11 @@ import { COMPATIBILIDAD } from '@/data/recetas';
 import { usePalette } from '@/hooks/use-palette';
 import {
   alergenosDe, cantidad, cargaMl, categoriaPorId, equivalencia, esCaliente, lineaNombre,
-  maxEscala, NOMBRE_ALERGENO, programasDe, racionesPara, reposoTxt, seguridadDe, tiempoTotal,
+  limiteReal, maxEscala, NOMBRE_ALERGENO, programasDe, racionesPara, reposoTxt, seguridadDe, tiempoTotal,
 } from '@/lib/format';
 import { useApp, useRecetas } from '@/lib/store';
+import { planificar } from '@/lib/tandas';
+import { sustitucionesDe } from '@/data/sustituciones';
 import { FONT, RADIUS } from '@/theme/colors';
 
 export default function RecetaDetalle() {
@@ -24,7 +28,7 @@ export default function RecetaDetalle() {
   const recetas = useRecetas();
   const {
     esFav, alternarFav, añadirReceta, yaEnLista, notas, setNota, historial,
-    actualizarCocinada, vecesCocinada, borrarPropia,
+    actualizarCocinada, vecesCocinada, borrarPropia, fotos, setFoto, aparato,
   } = useApp();
 
   const [k, setK] = useState(1);
@@ -41,10 +45,11 @@ export default function RecetaDetalle() {
     );
   }
 
-  const max = maxEscala(r);
+  const limite = limiteReal(r, aparato);
+  const max = maxEscala(r, limite);
   const bloqueada = k > max;
   const carga = cargaMl(r, k);
-  const aprieta = cargaMl(r, 1) > r.limiteMl;
+  const aprieta = cargaMl(r, 1) > limite;
   const cat = categoriaPorId(r.cat);
   const fav = esFav(r.id);
   const alergenos = alergenosDe(r);
@@ -52,6 +57,24 @@ export default function RecetaDetalle() {
   const enLista = yaEnLista(r);
   const ultima = historial.find((h) => h.id === r.id);
   const nota = notas[r.id] ?? '';
+
+  const hacerFoto = async () => {
+    const acciones: any[] = [
+      { text: 'Hacer una foto', onPress: async () => {
+          const permiso = await ImagePicker.requestCameraPermissionsAsync();
+          if (!permiso.granted) return;
+          const res = await ImagePicker.launchCameraAsync({ quality: 0.6, allowsEditing: true, aspect: [16, 10] });
+          if (!res.canceled && res.assets[0]) setFoto(r.id, res.assets[0].uri);
+        } },
+      { text: 'Elegir de la galería', onPress: async () => {
+          const res = await ImagePicker.launchImageLibraryAsync({ quality: 0.6, allowsEditing: true, aspect: [16, 10] });
+          if (!res.canceled && res.assets[0]) setFoto(r.id, res.assets[0].uri);
+        } },
+    ];
+    if (fotos[r.id]) acciones.push({ text: 'Quitar la foto', style: 'destructive', onPress: () => setFoto(r.id, null) });
+    acciones.push({ text: 'Cancelar', style: 'cancel' });
+    Alert.alert('Foto del plato', 'Solo se guarda en tu móvil.', acciones);
+  };
 
   const alternarPuesto = (i: number) =>
     setPuestos((p) => (p.includes(i) ? p.filter((x) => x !== i) : [...p, i]));
@@ -76,9 +99,16 @@ export default function RecetaDetalle() {
         style={{ backgroundColor: c.bg }}
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.content}>
-        <View style={[styles.hero, styles.heroPh, { backgroundColor: c.cardAlt }]}>
-          <Text style={{ fontSize: 64 }}>{cat?.emoji}</Text>
-        </View>
+        <Pressable onPress={hacerFoto} accessibilityLabel={fotos[r.id] ? 'Cambiar la foto' : 'Hacer una foto del plato'}>
+          {fotos[r.id] ? (
+            <Image source={{ uri: fotos[r.id] }} style={styles.hero} contentFit="cover" transition={180} />
+          ) : (
+            <View style={[styles.hero, styles.heroPh, { backgroundColor: c.cardAlt }]}>
+              <Text style={{ fontSize: 58 }}>{cat?.emoji}</Text>
+              <Text style={[styles.heroPie, { color: c.muted }]}>Toca para poner tu foto</Text>
+            </View>
+          )}
+        </Pressable>
 
         <Text style={[styles.title, { color: c.text }]}>{r.nombre}</Text>
         <Text style={[styles.original, { color: c.muted }]}>
@@ -167,13 +197,22 @@ export default function RecetaDetalle() {
 
           {bloqueada ? (
             <>
+              {(() => {
+                const plan = planificar(r, racionesPara(r, k), limite);
+                if (plan.imposible || plan.deUnaVez) return null;
+                return (
+                  <Callout tone="tip" title={`Hazlo en ${plan.tandas} tandas`}>
+                    {`Para ${plan.raciones} raciones: ${plan.tandas} tandas de ${plan.escalaPorTanda}× (unos ${plan.cargaPorTanda} ml cada una, por debajo de los ${plan.limiteMl} ml).\n\nEntre tanda y tanda, enjuaga la jarra o pasa el programa CLEAN.`}
+                  </Callout>
+                );
+              })()}
               <Callout tone="warn" title={`${k}× no cabe en tu jarra`}>
                 {`A ${k}× la carga sería de unos ${(carga / 1000).toFixed(2).replace('.', ',')} L, por encima de la línea ${lineaNombre(r)} que el manual prohíbe superar. Por eso la app no te muestra esas cantidades: no serían una preparación segura.\n\nCon esta receta puedes llegar como máximo a ${max}×. Para más raciones, cocina dos tandas.`}
               </Callout>
               <View style={styles.gauge}>
-                <JugGauge cargaMl={carga} limiteMl={r.limiteMl} />
+                <JugGauge cargaMl={carga} limiteMl={limite} />
                 <Text style={[styles.gaugeTxt, { color: c.muted, flex: 1 }]}>
-                  Carga estimada a {k}×: {carga} ml{'\n'}Límite: {r.limiteMl} ml
+                  Carga estimada a {k}×: {carga} ml{'\n'}Límite: {limite} ml
                 </Text>
               </View>
               <Pressable onPress={() => setK(1)} style={[styles.ghost, { borderColor: c.separator }]}>
@@ -202,6 +241,11 @@ export default function RecetaDetalle() {
                     <View style={{ flex: 1 }}>
                       <Text style={[styles.ingTxt, { color: c.textSoft }, puesto && styles.tachado]}>{ing.n}</Text>
                       {eq && <Text style={[styles.eq, { color: c.muted }]}>{eq}</Text>}
+                      {sustitucionesDe(ing.n).length > 0 && (
+                        <Text style={[styles.eq, { color: c.tint }]}>
+                          ¿No tienes? {sustitucionesDe(ing.n).map((o) => o.por).join(' · ')}
+                        </Text>
+                      )}
                       {noUsado && <Text style={[styles.eq, { color: c.danger }]}>la receta original no dice dónde va</Text>}
                     </View>
                   </Pressable>
@@ -209,9 +253,9 @@ export default function RecetaDetalle() {
               })}
 
               <View style={styles.gauge}>
-                <JugGauge cargaMl={carga} limiteMl={r.limiteMl} />
+                <JugGauge cargaMl={carga} limiteMl={limite} />
                 <Text style={[styles.gaugeTxt, { color: c.muted, flex: 1 }]}>
-                  Carga estimada a {k}×: {carga} ml de {r.limiteMl} ml.{'\n'}
+                  Carga estimada a {k}×: {carga} ml de {limite} ml.{'\n'}
                   <Text style={{ fontSize: 11.5 }}>Cálculo de la app (±20 %), no del manual. Manda la línea grabada.</Text>
                 </Text>
               </View>
@@ -400,7 +444,8 @@ const styles = StyleSheet.create({
   content: { paddingHorizontal: 16, maxWidth: 720, width: '100%', alignSelf: 'center', paddingBottom: 48 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   hero: { width: '100%', aspectRatio: 16 / 10, borderRadius: RADIUS, marginTop: 4 },
-  heroPh: { alignItems: 'center', justifyContent: 'center' },
+  heroPh: { alignItems: 'center', justifyContent: 'center', gap: 8 },
+  heroPie: { fontSize: 12.5, fontWeight: '500' },
   title: { fontSize: 27, fontWeight: '700', lineHeight: 32, marginTop: 16, letterSpacing: -0.5 },
   original: { fontSize: 13.5, fontStyle: 'italic', marginTop: 4 },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, alignItems: 'center', marginTop: 10 },

@@ -8,6 +8,8 @@ import {
   alergenosDe, buscarAyuda, cantidad, equivalencia, filtrar, pasilloDe, pasosCocina, programasDe,
 } from '../src/lib/format';
 import { cargaMl, maxEscala } from '../src/lib/volumen';
+import { adivinarPrograma, aReceta, desdeHtml, desdeTexto, parsearIngrediente } from '../src/lib/importar';
+import { planificar } from '../src/lib/tandas';
 
 const BOTONES_REALES = new Set<string>([
   ...MAQUINA.programas.map((p) => p.b),
@@ -194,4 +196,77 @@ test('servir o desmoldar vacía la jarra', () => {
     const pasos = pasosCocina(r, 1);
     assert.equal(pasos[pasos.length - 1].enJarra.length, 0, `${id}: la jarra debería quedar vacía al final`);
   }
+});
+
+test('el importador entiende cantidades escritas de formas distintas', () => {
+  assert.deepEqual(parsearIngrediente('400 g de tomate entero pelado'), { c: 400, u: 'g', n: 'tomate entero pelado' });
+  assert.deepEqual(parsearIngrediente('- 2 cucharadas de aceite de oliva'), { c: 2, u: 'cda', n: 'aceite de oliva' });
+  assert.deepEqual(parsearIngrediente('½ manzana'), { c: 0.5, u: 'ud', n: 'manzana' });
+  assert.deepEqual(parsearIngrediente('1 kg de patatas'), { c: 1000, u: 'g', n: 'patatas' });
+  assert.deepEqual(parsearIngrediente('2 dientes de ajo'), { c: 2, u: 'diente', n: 'ajo' });
+  assert.equal(parsearIngrediente('sal al gusto').c, null);
+});
+
+test('adivina el programa a partir del nombre', () => {
+  assert.equal(adivinarPrograma('Crema de calabacín', '').programa, 'SMOOTH SOUP');
+  assert.equal(adivinarPrograma('Sopa de pollo', '').programa, 'CHUNKY SOUP');
+  assert.equal(adivinarPrograma('Mermelada de higos', '').programa, 'JAM');
+  assert.equal(adivinarPrograma('Batido de plátano', '').programa, 'MILKSHAKE');
+  assert.equal(adivinarPrograma('Sorbete de limón', '').caliente, false);
+});
+
+test('importa una receta en JSON-LD como las de las webs de cocina', () => {
+  const html = `<html><head><script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: 'Crema de zanahoria',
+    recipeYield: '4 raciones',
+    recipeIngredient: ['500 g de zanahoria', '2 cucharadas de aceite', '700 ml de caldo'],
+    recipeInstructions: [{ '@type': 'HowToStep', text: 'Sofríe la cebolla.' }, { '@type': 'HowToStep', text: 'Añade el caldo y cuece.' }],
+  })}</script></head><body></body></html>`;
+  const b = desdeHtml(html, 'https://ejemplo.com/receta');
+  assert.ok(b, 'debería haber encontrado la receta');
+  assert.equal(b!.nombre, 'Crema de zanahoria');
+  assert.equal(b!.raciones, 4);
+  assert.equal(b!.ing.length, 3);
+  assert.deepEqual(b!.ing[0], { c: 500, u: 'g', n: 'zanahoria' });
+  assert.ok(b!.pasos.some((p) => p.b === 'SMOOTH SOUP'), 'debería proponer SMOOTH SOUP');
+  assert.ok(b!.pasos.some((p) => p.b === 'SAUTÉ'), 'al detectar «sofríe» debería añadir el sofrito');
+  assert.ok(b!.dudas.length > 0, 'siempre debe avisar de que los botones son deducidos');
+});
+
+test('lo importado se convierte en una receta válida y marcada como propia', () => {
+  const b = desdeTexto('Crema de puerro\n- 2 puerros\n- 500 ml de caldo\nTritura todo hasta que quede fino.');
+  const r = aReceta(b, 'test-1');
+  assert.equal(r.propia, true);
+  assert.ok(r.ing.length >= 2);
+  assert.ok(programasDe(r).length > 0, 'debe tener al menos un botón');
+  for (const p of r.pasos) {
+    if (p.b) assert.ok(BOTONES_REALES.has(p.b), `botón inventado: ${p.b}`);
+  }
+});
+
+test('el plan de tandas propone algo que de verdad cabe', () => {
+  // La fondue cabe holgada a 1x, así que sí se puede repartir en tandas.
+  const r = RECETAS.find((x) => x.id === 'fondue-chocolate')!;
+  const plan = planificar(r, r.racionesNum * 6);
+  assert.ok(!plan.imposible, 'una receta que cabe a 1x nunca es imposible');
+  assert.ok(plan.tandas >= 2, 'seis veces la receta no cabe de una vez');
+  assert.ok(
+    plan.cargaPorTanda <= plan.limiteMl,
+    `cada tanda debe caber: ${plan.cargaPorTanda} > ${plan.limiteMl}`
+  );
+});
+
+test('una receta que ya se pasa a 1x se marca imposible, no en tandas', () => {
+  // La crema de calabaza ya roza la línea con las cantidades base.
+  const r = RECETAS.find((x) => x.id === 'calabaza')!;
+  const plan = planificar(r, r.racionesNum * 2);
+  assert.equal(plan.imposible, true);
+});
+
+test('la jarra configurable cambia lo que cabe', () => {
+  const r = RECETAS.find((x) => x.id === 'fondue-chocolate')!;
+  assert.ok(maxEscala(r, 1400) >= 2, 'con jarra normal la fondue admite 2×');
+  assert.equal(maxEscala(r, 700), 1, 'con una jarra pequeña ya no');
 });

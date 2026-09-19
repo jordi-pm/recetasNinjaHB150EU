@@ -3,6 +3,7 @@ import * as Haptics from 'expo-haptics';
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import type { Pasillo, Receta } from '@/data/tipos';
+import { APARATO_POR_DEFECTO, sanear, type Aparato } from './aparato';
 import { cantidad, norm, pasilloDe } from './format';
 
 /* ------------------------------- tipos -------------------------------- */
@@ -39,6 +40,12 @@ type Estado = {
   historial: Cocinada[];
   propias: Receta[];
   sonido: boolean;
+  /** Fotos que hace el usuario, por id de receta. */
+  fotos: Record<string, string>;
+  /** La jarra de SU aparato. */
+  aparato: Aparato;
+  /** Ya ha pasado por la bienvenida. */
+  presentado: boolean;
 };
 
 type Ctx = Estado & {
@@ -58,6 +65,12 @@ type Ctx = Estado & {
   guardarPropia: (r: Receta) => void;
   borrarPropia: (id: string) => void;
   setSonido: (v: boolean) => void;
+  setFoto: (id: string, uri: string | null) => void;
+  setAparato: (a: Partial<Aparato>) => void;
+  marcarPresentado: () => void;
+  /** Todo lo del usuario en un objeto, para hacer copia de seguridad. */
+  exportar: () => string;
+  importar: (json: string) => { ok: boolean; mensaje: string };
   restablecer: () => void;
   pendientes: number;
   vecesCocinada: (id: string) => number;
@@ -75,6 +88,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [historial, setHistorial] = useState<Cocinada[]>([]);
   const [propias, setPropias] = useState<Receta[]>([]);
   const [sonido, setSonidoState] = useState(true);
+  const [fotos, setFotos] = useState<Record<string, string>>({});
+  const [aparato, setAparatoState] = useState<Aparato>(APARATO_POR_DEFECTO);
+  const [presentado, setPresentado] = useState(false);
   const [listo, setListo] = useState(false);
 
   useEffect(() => {
@@ -88,6 +104,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         if (Array.isArray(o.historial)) setHistorial(o.historial);
         if (Array.isArray(o.propias)) setPropias(o.propias);
         if (typeof o.sonido === 'boolean') setSonidoState(o.sonido);
+        if (o.fotos && typeof o.fotos === 'object') setFotos(o.fotos);
+        if (o.aparato) setAparatoState(sanear(o.aparato));
+        if (typeof o.presentado === 'boolean') setPresentado(o.presentado);
       })
       .catch(() => {})
       .finally(() => setListo(true));
@@ -97,9 +116,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (!listo) return;
     AsyncStorage.setItem(
       CLAVE,
-      JSON.stringify({ fav, compra, notas, historial, propias, sonido })
+      JSON.stringify({ fav, compra, notas, historial, propias, sonido, fotos, aparato, presentado })
     ).catch(() => {});
-  }, [fav, compra, notas, historial, propias, sonido, listo]);
+  }, [fav, compra, notas, historial, propias, sonido, fotos, aparato, presentado, listo]);
 
   /* ------------------------------ favoritos ---------------------------- */
 
@@ -232,6 +251,43 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const setSonido = useCallback((v: boolean) => setSonidoState(v), []);
 
+  const setFoto = useCallback((id: string, uri: string | null) => {
+    setFotos((prev) => {
+      const next = { ...prev };
+      if (uri) next[id] = uri;
+      else delete next[id];
+      return next;
+    });
+  }, []);
+
+  const setAparato = useCallback((a: Partial<Aparato>) => {
+    setAparatoState((prev) => sanear({ ...prev, ...a }));
+  }, []);
+
+  const marcarPresentado = useCallback(() => setPresentado(true), []);
+
+  const exportar = useCallback(
+    () => JSON.stringify({ version: 1, fecha: Date.now(), fav, compra, notas, historial, propias, aparato }, null, 2),
+    [fav, compra, notas, historial, propias, aparato]
+  );
+
+  const importar = useCallback((json: string) => {
+    try {
+      const o = JSON.parse(json);
+      if (!o || typeof o !== 'object') throw new Error('formato');
+      if (Array.isArray(o.fav)) setFav(o.fav);
+      if (Array.isArray(o.compra)) setCompra(o.compra);
+      if (o.notas && typeof o.notas === 'object') setNotas(o.notas);
+      if (Array.isArray(o.historial)) setHistorial(o.historial);
+      if (Array.isArray(o.propias)) setPropias(o.propias);
+      if (o.aparato) setAparatoState(sanear(o.aparato));
+      const n = (o.propias?.length ?? 0) + (o.fav?.length ?? 0);
+      return { ok: true, mensaje: `Restaurado: ${o.propias?.length ?? 0} recetas tuyas y ${o.fav?.length ?? 0} favoritas.` };
+    } catch {
+      return { ok: false, mensaje: 'Ese archivo no tiene el formato de una copia de Sopera.' };
+    }
+  }, []);
+
   const restablecer = useCallback(() => {
     setFav([]);
     setCompra([]);
@@ -243,18 +299,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({
-      fav, compra, notas, historial, propias, sonido, listo,
+      fav, compra, notas, historial, propias, sonido, fotos, aparato, presentado, listo,
       esFav, alternarFav, añadirReceta, añadirManual, yaEnLista,
       alternarItem, quitarItem, vaciarCompra, marcarTodoComprado,
       setNota, registrarCocinada, actualizarCocinada, vecesCocinada,
-      guardarPropia, borrarPropia, setSonido, restablecer, pendientes,
+      guardarPropia, borrarPropia, setSonido, setFoto, setAparato,
+      marcarPresentado, exportar, importar, restablecer, pendientes,
     }),
     [
-      fav, compra, notas, historial, propias, sonido, listo,
+      fav, compra, notas, historial, propias, sonido, fotos, aparato, presentado, listo,
       esFav, alternarFav, añadirReceta, añadirManual, yaEnLista,
       alternarItem, quitarItem, vaciarCompra, marcarTodoComprado,
       setNota, registrarCocinada, actualizarCocinada, vecesCocinada,
-      guardarPropia, borrarPropia, setSonido, restablecer, pendientes,
+      guardarPropia, borrarPropia, setSonido, setFoto, setAparato,
+      marcarPresentado, exportar, importar, restablecer, pendientes,
     ]
   );
 

@@ -183,15 +183,16 @@ export function cargaMl(r: Receta, k = 1): number {
   return Math.round(Math.max(aparenteSolidos, realSolidos + liquidos));
 }
 
-/** Máximo múltiplo que sigue cabiendo bajo la línea que aplica (1..3). */
-export function maxEscala(r: Receta): number {
-  for (let k = 3; k >= 2; k--) if (cargaMl(r, k) <= r.limiteMl) return k;
+/** Máximo múltiplo que sigue cabiendo bajo la línea que aplica (1..3).
+ *  `limite` permite usar la jarra real del usuario en vez de la de la receta. */
+export function maxEscala(r: Receta, limite: number = r.limiteMl): number {
+  for (let k = 3; k >= 2; k--) if (cargaMl(r, k) <= limite) return k;
   return 1;
 }
 
 /** ¿La estimación a 1× ya roza o pasa la línea grabada? */
-export function aprietaA1x(r: Receta): boolean {
-  return cargaMl(r, 1) > r.limiteMl;
+export function aprietaA1x(r: Receta, limite: number = r.limiteMl): boolean {
+  return cargaMl(r, 1) > limite;
 }
 
 /** Desglose, para poder enseñar de dónde sale el número. */

@@ -12,7 +12,9 @@
       "supportsTablet": false,
       "icon": "./assets/images/icon.png",
       "infoPlist": {
-        "CFBundleDisplayName": "Sopera"
+        "CFBundleDisplayName": "Sopera",
+        "NSCameraUsageDescription": "Para que puedas hacer una foto de tus platos y verla en la receta. La foto se guarda solo en tu móvil.",
+        "NSPhotoLibraryUsageDescription": "Para elegir una foto de tus platos y verla en la receta. La foto se guarda solo en tu móvil."
       },
       "buildNumber": "5",
       "config": {

@@ -150,6 +150,10 @@ export const reposoTxt = (r: Receta) =>
   !r.reposo ? null : r.reposo >= 60 ? `${r.reposo / 60} h` : `${r.reposo} min`;
 
 export const esCaliente = (r: Receta) => r.limiteMl === MAQUINA.capacidad.calienteMl;
+
+/** Línea de llenado que aplica a esta receta, según la jarra del usuario. */
+export const limiteReal = (r: Receta, ap: { calienteMl: number; frioMl: number }) =>
+  esCaliente(r) ? ap.calienteMl : ap.frioMl;
 export const lineaNombre = (r: Receta) => (esCaliente(r) ? 'HOT (1,4 L)' : 'COLD (1,6 L)');
 
 export function racionesPara(r: Receta, k: number): number {

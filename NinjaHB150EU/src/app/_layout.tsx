@@ -49,6 +49,8 @@ function Navegacion() {
         <Stack.Screen name="nueva-receta" options={cerrar('Receta tuya')} />
         <Stack.Screen name="programas" options={{ title: 'Programas', headerBackTitle: 'Atrás' }} />
         <Stack.Screen name="cabe" options={{ title: '¿Cabe?', headerBackTitle: 'Atrás' }} />
+        <Stack.Screen name="diagnostico" options={{ title: 'Diagnóstico', headerBackTitle: 'Atrás' }} />
+        <Stack.Screen name="importar" options={cerrar('Importar receta')} />
         <Stack.Screen
           name="cocinar/[id]"
           options={{ headerShown: false, presentation: 'fullScreenModal', animation: 'slide_from_bottom' }}

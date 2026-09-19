@@ -1,10 +1,12 @@
+import * as Clipboard from 'expo-clipboard';
 import { Stack, useRouter } from 'expo-router';
-import { Alert, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, Platform, Pressable, ScrollView, Share, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 
 import { IconoTemaActual, SelectorTema } from '@/components/selector-tema';
 import { Card, SectionTitle } from '@/components/ui-kit';
 import { COMPATIBILIDAD, RECETAS } from '@/data/recetas';
 import { usePalette } from '@/hooks/use-palette';
+import { PRESETS } from '@/lib/aparato';
 import { useApp } from '@/lib/store';
 import { pedirPermisoAvisos } from '@/lib/temporizador';
 import { useTema } from '@/lib/tema';
@@ -16,7 +18,7 @@ export default function Ajustes() {
   const c = usePalette();
   const router = useRouter();
   const { pref } = useTema();
-  const { fav, compra, historial, propias, notas, sonido, setSonido, restablecer } = useApp();
+  const { fav, compra, historial, propias, notas, sonido, setSonido, restablecer, aparato, setAparato, exportar, importar } = useApp();
   const oficiales = RECETAS.filter((r) => !r.plantilla && !r.tecnica).length;
 
   const confirmarReset = () =>
@@ -107,6 +109,70 @@ export default function Ajustes() {
           <Fila etiqueta="Añadir receta tuya" onPress={() => { router.back(); setTimeout(() => router.push('/nueva-receta'), 350); }} />
         </Card>
 
+        <SectionTitle style={styles.st}>Tu jarra</SectionTitle>
+        <Card style={styles.pad}>
+          <Text style={[styles.body, { color: c.muted }]}>
+            Las líneas de llenado varían entre modelos. Con estos valores la app decide si una receta cabe.
+          </Text>
+          <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
+            {PRESETS.map((p) => {
+              const activo = aparato.totalMl === p.ap.totalMl && aparato.calienteMl === p.ap.calienteMl;
+              return (
+                <Pressable
+                  key={p.id}
+                  onPress={() => setAparato(p.ap)}
+                  style={[styles.chip, { backgroundColor: activo ? c.panel : c.cardAlt, borderColor: activo ? c.panel : c.separator }]}>
+                  <Text style={{ color: activo ? '#FFF' : c.text, fontSize: 13.5 }}>{p.nombre}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          <View style={{ flexDirection: 'row', gap: 10 }}>
+            {([['calienteMl', 'Línea HOT'], ['frioMl', 'Línea COLD'], ['totalMl', 'Total']] as const).map(([campo, etiqueta]) => (
+              <View key={campo} style={{ flex: 1 }}>
+                <Text style={[styles.ayuda, { color: c.muted }]}>{etiqueta}</Text>
+                <TextInput
+                  defaultValue={String(aparato[campo])}
+                  onEndEditing={(e) => {
+                    const v = parseInt(e.nativeEvent.text.replace(/\D/g, ''), 10);
+                    if (isFinite(v)) setAparato({ [campo]: v } as any);
+                  }}
+                  keyboardType="number-pad"
+                  style={[styles.input, { color: c.text, borderColor: c.separator, backgroundColor: c.cardAlt }]}
+                />
+              </View>
+            ))}
+          </View>
+          <Text style={[styles.ayuda, { color: c.muted }]}>En mililitros. Mira las líneas grabadas en tu jarra.</Text>
+        </Card>
+
+        <SectionTitle style={styles.st}>Copia de seguridad</SectionTitle>
+        <Card style={styles.pad}>
+          <Text style={[styles.body, { color: c.muted }]}>
+            Tus recetas, favoritos, notas e historial viven solo en este móvil. Guarda una copia de vez en cuando.
+          </Text>
+          <Pressable
+            onPress={() => Share.share({ message: exportar() }).catch(() => {})}
+            style={[styles.ghost, { borderColor: c.separator }]}>
+            <Text style={{ color: c.tint, fontSize: 15, fontWeight: '600' }}>Exportar una copia</Text>
+          </Pressable>
+          <Pressable
+            onPress={async () => {
+              const t = await Clipboard.getStringAsync();
+              if (!t) return Alert.alert('Portapapeles vacío', 'Copia primero el texto de la copia de seguridad.');
+              Alert.alert('Restaurar', 'Se sustituirán tus datos actuales por los de la copia. ¿Seguir?', [
+                { text: 'Cancelar', style: 'cancel' },
+                { text: 'Restaurar', style: 'destructive', onPress: () => {
+                    const r = importar(t);
+                    Alert.alert(r.ok ? 'Listo' : 'No se pudo', r.mensaje);
+                  } },
+              ]);
+            }}
+            style={[styles.ghost, { borderColor: c.separator }]}>
+            <Text style={{ color: c.tint, fontSize: 15, fontWeight: '600' }}>Restaurar desde el portapapeles</Text>
+          </Pressable>
+        </Card>
+
         <SectionTitle style={styles.st}>Tus datos</SectionTitle>
         <Card style={styles.pad}>
           <Fila primera etiqueta="Recetas favoritas" valor={String(fav.length)} />
@@ -149,7 +215,9 @@ const styles = StyleSheet.create({
   sinBorde: { borderTopWidth: 0, paddingTop: 0, marginTop: 0 },
   filaEtiqueta: { fontSize: 15, flex: 1 },
   filaValor: { fontSize: 15, fontFamily: FONT.mono, fontVariant: ['tabular-nums'] },
-  ayuda: { fontSize: 12.5, lineHeight: 17 },
+  ayuda: { fontSize: 12.5, lineHeight: 17, marginBottom: 5 },
+  chip: { borderWidth: 1, borderRadius: 999, paddingHorizontal: 13, paddingVertical: 8 },
+  input: { borderWidth: 1, borderRadius: 9, paddingHorizontal: 10, paddingVertical: 10, fontSize: 15, textAlign: 'center' },
   destructivo: { borderWidth: 1, borderRadius: 11, paddingVertical: 13, alignItems: 'center', marginTop: 14, paddingHorizontal: 10 },
   ghost: { borderWidth: 1, borderRadius: 11, paddingVertical: 12, alignItems: 'center' },
   body: { fontSize: 13.5, lineHeight: 19 },

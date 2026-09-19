@@ -128,6 +128,8 @@ export default function Inicio() {
         <SectionTitle style={styles.st}>Herramientas</SectionTitle>
         <View style={{ gap: 10 }}>
           <Acceso icono="✏️" titulo="Crear una receta mía" sub={propias.length ? `Ya tienes ${propias.length}` : 'Con el mismo control de capacidad que el resto'} onPress={() => router.push('/nueva-receta')} />
+          <Acceso icono="🔗" titulo="Importar una receta" sub="De una web de cocina o pegando el texto" onPress={() => router.push('/importar')} />
+          <Acceso icono="🩺" titulo="¿Qué ha salido mal?" sub="Espeso, aguado, con trozos, pegado…" onPress={() => router.push('/diagnostico')} />
           <Acceso icono="📏" titulo="¿Cabe en la jarra?" sub="Comprueba si te pasas de la línea sin seguir receta" onPress={() => router.push('/cabe')} />
           <Acceso icono="⏱" titulo="Los programas por dentro" sub="Qué hace cada uno y cuánto tarda" onPress={() => router.push('/programas')} />
           <Acceso icono="⚙️" titulo="Mi aparato" sub="Programas, límites de llenado y avisos de seguridad" onPress={() => router.push('/maquina')} />
