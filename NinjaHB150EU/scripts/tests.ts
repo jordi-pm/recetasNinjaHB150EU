@@ -174,3 +174,24 @@ test('los pasos ya no repiten la orden que da la tecla', () => {
     }
   }
 });
+
+test('el modo cocina dice siempre qué hay dentro de la jarra', () => {
+  const r = RECETAS.find((x) => x.id === 'calabaza')!;
+  const pasos = pasosCocina(r, 1);
+  const chop = pasos.find((p) => p.b === 'CHOP')!;
+  assert.ok(chop.enJarra.length > 0, 'en el paso CHOP la jarra no puede estar vacía');
+  assert.ok(chop.continua, 'CHOP debe indicar que el contenido sigue dentro');
+  const soup = pasos.find((p) => p.b === 'SMOOTH SOUP')!;
+  assert.ok(
+    soup.enJarra.length > chop.enJarra.length,
+    'al llegar a SMOOTH SOUP debe haber más cosas dentro que en CHOP'
+  );
+});
+
+test('servir o desmoldar vacía la jarra', () => {
+  for (const id of ['mermelada-fresa', 'helado-arandanos']) {
+    const r = RECETAS.find((x) => x.id === id)!;
+    const pasos = pasosCocina(r, 1);
+    assert.equal(pasos[pasos.length - 1].enJarra.length, 0, `${id}: la jarra debería quedar vacía al final`);
+  }
+});

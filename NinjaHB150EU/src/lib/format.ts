@@ -255,14 +255,32 @@ export const ORDEN_PASILLOS: Pasillo[] = [
 
 /* ---------------------------- modo cocinar ----------------------------- */
 
-/** Expande los pasos a un paso por acción, para el modo guiado. */
+/** Nombre corto de un ingrediente, para la lista de «qué hay en la jarra». */
+export function nombreCorto(n: string): string {
+  return n.split(/[,(]/)[0].replace(/\s+(en|de|sin|para)\s+.*$/i, '').trim();
+}
+
+/** Expande los pasos a un paso por acción, para el modo guiado.
+ *  Lleva la cuenta de lo que hay dentro de la jarra en cada momento: sin eso
+ *  no sabes si después de CHOP hay que sacar algo o sigue todo dentro. */
 export function pasosCocina(r: Receta, k: number): PasoCocina[] {
   const out: PasoCocina[] = [];
+  let jarra: string[] = [];
+
+  const meter = (i: number) => {
+    const corto = nombreCorto(r.ing[i].n);
+    if (!jarra.includes(corto)) jarra.push(corto);
+  };
+
   r.pasos.forEach((p, origen) => {
+    if (p.vacia) jarra = [];
+
     if (p.add && p.add.length) {
       p.add.forEach((i, idx) => {
         const ing = r.ing[i];
         const q = cantidad(ing, k);
+        const habia = jarra.length;
+        if (!ing.fuera) meter(i);
         out.push({
           origen,
           cap: idx === 0 ? p.t || 'Carga la jarra' : null,
@@ -271,21 +289,29 @@ export function pasosCocina(r: Receta, k: number): PasoCocina[] {
             : `Añade ${q.txt} de ${ing.n}`,
           faltan: idx === 0 ? p.faltan : undefined,
           aviso: idx === 0 ? p.aviso : undefined,
+          enJarra: [...jarra],
+          continua: habia > 0,
         });
       });
-      if (p.b) out.push({ origen, txt: p.t || '', b: p.b, sub: p.sub, min: p.min, aviso: p.aviso });
+      if (p.b) {
+        out.push({ origen, txt: p.t || '', b: p.b, sub: p.sub, min: p.min, aviso: p.aviso,
+          enJarra: [...jarra], continua: jarra.length > 0 });
+      }
     } else {
-      out.push({ origen, txt: p.t || '', b: p.b, sub: p.sub, min: p.min, faltan: p.faltan, aviso: p.aviso });
+      out.push({ origen, txt: p.t || '', b: p.b, sub: p.sub, min: p.min, faltan: p.faltan,
+        aviso: p.aviso, enJarra: [...jarra], continua: jarra.length > 0 && !p.vacia });
+      if (p.vacia) jarra = [];
     }
   });
 
-  // Ingredientes que la receta original lista pero nunca manda añadir.
   if (r.sinUsar?.length) {
     const lista = r.sinUsar.map((i) => lineaIng(r.ing[i], k)).join(', ');
     out.push({
       origen: r.pasos.length,
       txt: 'Revisa antes de servir',
       aviso: `La receta original lista ${lista} pero no dice en qué paso van. No los hemos colocado por ti: decide tú si los añades con el sofrito o con la verdura.`,
+      enJarra: [],
+      continua: false,
     });
   }
 

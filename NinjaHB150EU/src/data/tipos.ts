@@ -53,6 +53,8 @@ export type Paso = {
   faltan?: number;
   /** Aviso concreto para este paso (vapor, pitidos, tapa…). */
   aviso?: string;
+  /** Este paso saca el contenido de la jarra (servir, desmoldar, enfriar). */
+  vacia?: boolean;
 };
 
 export type Receta = {
@@ -94,6 +96,10 @@ export type PasoCocina = {
   min?: number;
   faltan?: number;
   aviso?: string;
+  /** Qué hay dentro de la jarra en este momento. */
+  enJarra: string[];
+  /** El contenido anterior sigue dentro: no hay que sacar nada. */
+  continua: boolean;
   /** Índice del paso original, para poder reanudar. */
   origen: number;
 };

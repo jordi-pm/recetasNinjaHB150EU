@@ -50,13 +50,22 @@ export default function Inicio() {
         options={{
           title: 'Recetas',
           headerRight: () => (
-            <Pressable onPress={() => router.push('/ajustes')} hitSlop={12} accessibilityLabel="Ajustes de la app">
-              {Platform.OS === 'ios' ? (
-                <SymbolView name="gearshape.fill" size={21} tintColor={c.tint} resizeMode="scaleAspectFit" />
-              ) : (
-                <Text style={{ fontSize: 19 }}>⚙️</Text>
-              )}
-            </Pressable>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 18 }}>
+              <Pressable onPress={() => router.push('/nueva-receta')} hitSlop={12} accessibilityLabel="Crear una receta">
+                {Platform.OS === 'ios' ? (
+                  <SymbolView name="plus" size={21} tintColor={c.tint} resizeMode="scaleAspectFit" />
+                ) : (
+                  <Text style={{ fontSize: 24, color: c.tint }}>+</Text>
+                )}
+              </Pressable>
+              <Pressable onPress={() => router.push('/ajustes')} hitSlop={12} accessibilityLabel="Ajustes de la app">
+                {Platform.OS === 'ios' ? (
+                  <SymbolView name="gearshape.fill" size={21} tintColor={c.tint} resizeMode="scaleAspectFit" />
+                ) : (
+                  <Text style={{ fontSize: 19 }}>⚙️</Text>
+                )}
+              </Pressable>
+            </View>
           ),
         }}
       />
@@ -118,9 +127,9 @@ export default function Inicio() {
 
         <SectionTitle style={styles.st}>Herramientas</SectionTitle>
         <View style={{ gap: 10 }}>
+          <Acceso icono="✏️" titulo="Crear una receta mía" sub={propias.length ? `Ya tienes ${propias.length}` : 'Con el mismo control de capacidad que el resto'} onPress={() => router.push('/nueva-receta')} />
           <Acceso icono="📏" titulo="¿Cabe en la jarra?" sub="Comprueba si te pasas de la línea sin seguir receta" onPress={() => router.push('/cabe')} />
           <Acceso icono="⏱" titulo="Los programas por dentro" sub="Qué hace cada uno y cuánto tarda" onPress={() => router.push('/programas')} />
-          <Acceso icono="✏️" titulo="Añadir receta tuya" sub={propias.length ? `Tienes ${propias.length} guardada${propias.length > 1 ? 's' : ''}` : 'Con la misma ficha y los mismos avisos'} onPress={() => router.push('/nueva-receta')} />
           <Acceso icono="⚙️" titulo="Mi aparato" sub="Programas, límites de llenado y avisos de seguridad" onPress={() => router.push('/maquina')} />
         </View>
 

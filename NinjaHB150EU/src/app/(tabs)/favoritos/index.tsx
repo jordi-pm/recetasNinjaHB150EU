@@ -1,13 +1,14 @@
 import { Stack, useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { SymbolView } from 'expo-symbols';
 
 import { RecipeCard } from '@/components/recipe-card';
 import { usePalette } from '@/hooks/use-palette';
 import { useApp, useRecetas } from '@/lib/store';
 import { FONT, RADIUS } from '@/theme/colors';
 
-type Vista = 'favoritas' | 'historial';
+type Vista = 'favoritas' | 'mias' | 'historial';
 
 const fecha = (ms: number) =>
   new Date(ms).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -17,9 +18,19 @@ const CUPO = { sobrada: 'cupo de sobra', justa: 'cupo justa', 'se-paso': 'se pas
 export default function Favoritos() {
   const c = usePalette();
   const router = useRouter();
-  const { fav, historial } = useApp();
+  const { fav, historial, propias } = useApp();
   const recetas = useRecetas();
   const [vista, setVista] = useState<Vista>('favoritas');
+
+  const botonNueva = () => (
+    <Pressable onPress={() => router.push('/nueva-receta')} hitSlop={12} accessibilityLabel="Crear una receta">
+      {Platform.OS === 'ios' ? (
+        <SymbolView name="plus" size={20} tintColor={c.tint} resizeMode="scaleAspectFit" />
+      ) : (
+        <Text style={{ color: c.tint, fontSize: 24 }}>+</Text>
+      )}
+    </Pressable>
+  );
 
   const favoritas = useMemo(
     () => fav.map((id) => recetas.find((r) => r.id === id)).filter(Boolean),
@@ -28,25 +39,69 @@ export default function Favoritos() {
 
   const selector = (
     <View style={[styles.seg, { backgroundColor: c.cardAlt }]}>
-      {(['favoritas', 'historial'] as Vista[]).map((v) => (
+      {(['favoritas', 'mias', 'historial'] as Vista[]).map((v) => (
         <Pressable
           key={v}
           onPress={() => setVista(v)}
           style={[styles.segBtn, vista === v && { backgroundColor: c.card }]}
           accessibilityRole="tab"
           accessibilityState={{ selected: vista === v }}>
-          <Text style={{ color: c.text, fontWeight: vista === v ? '600' : '400', fontSize: 14 }}>
-            {v === 'favoritas' ? `⭐ Favoritas${fav.length ? ` · ${fav.length}` : ''}` : `🕘 Historial${historial.length ? ` · ${historial.length}` : ''}`}
+          <Text style={{ color: c.text, fontWeight: vista === v ? '600' : '400', fontSize: 13.5 }}>
+            {v === 'favoritas'
+              ? `⭐ ${fav.length || ''}`.trim() || '⭐'
+              : v === 'mias'
+                ? `✏️ Mías${propias.length ? ` · ${propias.length}` : ''}`
+                : `🕘 ${historial.length || ''}`.trim() || '🕘'}
           </Text>
         </Pressable>
       ))}
     </View>
   );
 
+  if (vista === 'mias') {
+    return (
+      <>
+        <Stack.Screen options={{ title: 'Favoritos', headerRight: botonNueva }} />
+        <FlatList
+          style={{ backgroundColor: c.bg }}
+          contentInsetAdjustmentBehavior="automatic"
+          data={propias}
+          keyExtractor={(r) => r.id}
+          contentContainerStyle={styles.content}
+          ListHeaderComponent={<View style={{ marginBottom: 16 }}>{selector}</View>}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          ListEmptyComponent={
+            <View style={styles.empty}>
+              <Text style={{ fontSize: 40 }}>✏️</Text>
+              <Text style={[styles.emptyTxt, { color: c.muted }]}>
+                Aquí van tus recetas.{'\n'}Las guarda con el mismo control de capacidad que el resto.
+              </Text>
+              <Pressable
+                onPress={() => router.push('/nueva-receta')}
+                style={[styles.cta, { backgroundColor: c.panel }]}>
+                <Text style={styles.ctaTxt}>+ Crear mi primera receta</Text>
+              </Pressable>
+            </View>
+          }
+          ListFooterComponent={
+            propias.length ? (
+              <Pressable
+                onPress={() => router.push('/nueva-receta')}
+                style={[styles.ctaGhost, { borderColor: c.separator }]}>
+                <Text style={{ color: c.tint, fontSize: 15.5, fontWeight: '600' }}>+ Crear otra receta</Text>
+              </Pressable>
+            ) : null
+          }
+          renderItem={({ item }) => <RecipeCard receta={item} />}
+        />
+      </>
+    );
+  }
+
   if (vista === 'historial') {
     return (
       <>
-        <Stack.Screen options={{ title: 'Favoritos' }} />
+        <Stack.Screen options={{ title: 'Favoritos', headerRight: botonNueva }} />
         <FlatList
           style={{ backgroundColor: c.bg }}
           contentInsetAdjustmentBehavior="automatic"
@@ -86,7 +141,7 @@ export default function Favoritos() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Favoritos' }} />
+      <Stack.Screen options={{ title: 'Favoritos', headerRight: botonNueva }} />
       <FlatList
         style={{ backgroundColor: c.bg }}
         contentInsetAdjustmentBehavior="automatic"
@@ -117,5 +172,8 @@ const styles = StyleSheet.create({
   histTitulo: { fontSize: 15.5, fontWeight: '600' },
   histMeta: { fontSize: 12.5, fontFamily: FONT.mono },
   empty: { alignItems: 'center', gap: 12, paddingVertical: 50, paddingHorizontal: 30 },
+  cta: { borderRadius: 13, paddingVertical: 15, paddingHorizontal: 26, marginTop: 6 },
+  ctaTxt: { color: '#FFF', fontSize: 16, fontWeight: '700' },
+  ctaGhost: { borderWidth: 1, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginTop: 14 },
   emptyTxt: { fontSize: 15, textAlign: 'center', lineHeight: 21 },
 });

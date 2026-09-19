@@ -143,7 +143,7 @@ export const RECETAS: Receta[] = [
     { add: [3, 4, 5, 6, 7], t: 'Añade el resto de ingredientes en el orden indicado.' },
     { b: 'COOK', sub: 'HIGH', min: 14, t: 'A fuego fuerte.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
     { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ],
   tip: 'Para una sopa aún más fina, tritura otro minuto. Añade copos de chile para un toque picante.'
 },
@@ -173,7 +173,7 @@ export const RECETAS: Receta[] = [
     { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [6, 7, 8, 9, 10, 11], t: 'Añade el resto de ingredientes.' },
     { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 {
@@ -200,7 +200,7 @@ export const RECETAS: Receta[] = [
     { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4, 5, 6, 7, 8, 9], t: 'Añade el resto de ingredientes.' },
     { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   nota: 'Esta receta es la que más se acerca a la línea HOT (1,4 L). No añadas líquido extra.'
 },
@@ -224,7 +224,7 @@ export const RECETAS: Receta[] = [
     { add: [0, 1, 2, 3, 4, 5, 6], t: 'Introduce en la jarra todos los ingredientes EXCEPTO los fideos.' },
     { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves.' },
     { add: [7], faltan: 6, t: 'Añade los fideos de huevo.', aviso: 'Al abrir sale vapor: manos en las pestañas exteriores y levanta la tapa en vertical.' },
-    { t: 'Sirve inmediatamente.' }
+    { vacia: true, t: 'Sirve inmediatamente.' }
   ]
 },
 {
@@ -252,7 +252,7 @@ export const RECETAS: Receta[] = [
     { add: [4, 5, 6, 7, 8, 9], t: 'Añade el resto de ingredientes en el orden indicado.' },
     { b: 'COOK', sub: 'HIGH', min: 14, t: 'A fuego fuerte.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
     { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ],
   tip: 'Para una crema aún más fina, tritura otro minuto.'
 },
@@ -278,7 +278,7 @@ export const RECETAS: Receta[] = [
     { add: [4, 5, 6], t: 'Cuando el programa haya terminado, añade el resto de ingredientes.' },
     { b: 'COOK', sub: 'HIGH', min: 14, t: 'A fuego fuerte.', aviso: 'Pulsa PULSE de vez en cuando para repartir el calor (consejo del manual).' },
     { b: 'BLEND', sub: 'HIGH', min: 1, t: 'Tritura hasta la textura que quieras.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ],
   tip: 'Para una crema aún más fina, tritura otro minuto.'
 },
@@ -303,7 +303,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
     { b: 'CHUNKY SOUP', t: 'Se calienta hasta hervir y luego da pulsos suaves cada poco. No tritura: los trozos quedan enteros.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 {
@@ -337,7 +337,7 @@ export const RECETAS: Receta[] = [
     { b: 'CHUNKY SOUP', t: 'Precalentará hasta hervir y después removerá con pulsos suaves.' },
     { add: [12], faltan: 6, t: 'Añade las alubias blancas.', aviso: 'Al abrir sale vapor: manos en las pestañas exteriores y levanta la tapa en vertical.' },
     { b: 'CHUNKY SOUP', t: 'Coloca la tapa y reinicia el programa.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   discrepancia: 'Esta receta tiene dos cabos sueltos que preferimos dejar a la vista: el apio y la zanahoria están en la lista pero ningún paso dice cuándo entran, y el aceite del sofrito no lleva cantidad. Échale el aceite que te pida el sofrito y mete el apio y la zanahoria con el resto de la verdura.'
 },
@@ -363,7 +363,7 @@ export const RECETAS: Receta[] = [
     { add: [3, 4, 5], t: 'Añade la verdura, la proteína (si la usas) y la base líquida.' },
     { b: 'CHUNKY SOUP', t: 'Se calienta hasta hervir y luego da pulsos suaves cada poco, para que cueza parejo.' },
     { add: [6], faltan: 6, t: 'Si usas legumbres, añádelas ahora. Si usas pasta, sigue el tiempo del paquete.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   nota: 'Es una plantilla, no una receta cerrada: eliges tú los ingredientes dentro de cada grupo. Respeta las cantidades totales para no superar la línea de 1,4 L.'
 },
@@ -386,7 +386,7 @@ export const RECETAS: Receta[] = [
     { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4], t: 'Añade la verdura y la base líquida.' },
     { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   tip: 'Un par de chorritos de nata al final del programa y queda mucho más cremosa.',
   nota: 'Es una plantilla, no una receta cerrada. Con 1 L de líquido se queda muy cerca de la línea de 1,4 L: no añadas de más, y si acaso completa al final.'
@@ -413,7 +413,7 @@ export const RECETAS: Receta[] = [
     { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [4, 5, 6], t: 'Añade el resto de ingredientes SIN pasar de la línea HOT (1,4 L) de la jarra.' },
     { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ],
   discrepancia: 'Ojo con la cantidad: 4 latas de 400 g son ya 1,6 L solo de tomate, por encima de la línea de 1,4 L que no debes pasar con calor. Ve echando latas hasta la línea grabada y guarda lo que sobre; con tres latas suele quedar justo.'
 },
@@ -436,7 +436,7 @@ export const RECETAS: Receta[] = [
     { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [2, 3, 4], t: 'Añade el resto de ingredientes.' },
     { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 {
@@ -459,7 +459,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2, 3, 4, 5, 6, 7, 8], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
     { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
-    { t: 'Sirve con cuidado: la jarra está caliente.' }
+    { vacia: true, t: 'Sirve con cuidado: la jarra está caliente.' }
   ]
 },
 /* ------------------------------- MERMELADAS ------------------------------- */
@@ -480,7 +480,7 @@ export const RECETAS: Receta[] = [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra.' },
     { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
     { b: 'JAM', t: 'Media hora cociendo la fruta con el azúcar hasta que coge cuerpo.' },
-    { t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
+    { vacia: true, t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
   ]
 },
 {
@@ -499,7 +499,7 @@ export const RECETAS: Receta[] = [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
     { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
     { b: 'JAM', t: 'Media hora cociendo la fruta con el azúcar hasta que coge cuerpo.' },
-    { t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
+    { vacia: true, t: 'Saca la mermelada de la jarra y déjala enfriar en la nevera al menos 4 horas antes de usarla.' }
   ]
 },
 /* ----------------------------- BEBIDAS FRÍAS ------------------------------ */
@@ -519,7 +519,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra.' },
     { b: 'FROZEN DRINK', t: 'Un minuto rompiendo el hielo y la fruta hasta dejarlo granizado.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ]
 },
 {
@@ -536,7 +536,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
     { b: 'FROZEN DRINK', t: 'Un minuto rompiendo el hielo y la fruta hasta dejarlo granizado.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ]
 },
 {
@@ -554,7 +554,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
     { b: 'SMOOTHIE', t: 'Menos de un minuto alternando pulsos y velocidad alta.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ]
 },
 {
@@ -572,7 +572,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
     { b: 'SMOOTHIE', t: 'Menos de un minuto alternando pulsos y velocidad alta.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ]
 },
 {
@@ -590,7 +590,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
     { b: 'MILKSHAKE', t: 'Un minuto batiendo hasta que hace espuma.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ]
 },
 {
@@ -608,7 +608,7 @@ export const RECETAS: Receta[] = [
   pasos: [
     { add: [0, 1, 2, 3], t: 'Introduce todos los ingredientes en la jarra.' },
     { b: 'MILKSHAKE', t: 'Un minuto batiendo hasta que hace espuma.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ]
 },
 {
@@ -630,7 +630,7 @@ export const RECETAS: Receta[] = [
     { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la sopa coge el sabor.' },
     { add: [3, 4], t: 'Cuando el programa haya terminado, añade la nata y el hielo.', aviso: 'La jarra está caliente: usa manoplas y agárrala solo por el asa.' },
     { b: 'FROZEN DRINK', t: 'Un minuto rompiendo el hielo y la fruta hasta dejarlo granizado.' },
-    { t: 'Sirve.' }
+    { vacia: true, t: 'Sirve.' }
   ]
 },
 /* ---------------------------- BEBIDAS CALIENTES --------------------------- */
@@ -652,7 +652,7 @@ export const RECETAS: Receta[] = [
     { add: [0, 1, 2, 3], t: 'Introduce en la jarra la leche, la nata líquida, los chips de chocolate y la crema de cacahuete.' },
     { b: 'COOK', sub: 'MED', min: 20, t: 'A fuego medio.' },
     { b: 'PULSE', min: 5, t: 'Remueve con un pulso corto. Repítelo cada 5 minutos mientras cuece.' },
-    { add: [4, 5], t: 'Sirve y decora con mini nubes y sirope de chocolate, al gusto.' }
+    { add: [4, 5], vacia: true, t: 'Sirve y decora con mini nubes y sirope de chocolate, al gusto.' }
   ]
 },
 /* --------------------------------- POSTRES -------------------------------- */
@@ -673,7 +673,7 @@ export const RECETAS: Receta[] = [
     { add: [0, 1], t: 'Introduce en la jarra los chips de chocolate y la nata.' },
     { b: 'PULSE', t: 'Cinco pulsos cortos para romper el chocolate.' },
     { b: 'SAUCE', t: 'Media hora a fuego suave, removiendo sola. No hace falta que estés encima.' },
-    { t: 'Sirve la fondue caliente con pretzels, nubes, fresas u otra fruta, al gusto.' }
+    { vacia: true, t: 'Sirve la fondue caliente con pretzels, nubes, fresas u otra fruta, al gusto.' }
   ]
 },
 {
@@ -693,7 +693,7 @@ export const RECETAS: Receta[] = [
     { add: [0, 1, 2, 3, 4], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
     { b: 'DESSERT', t: 'Un minuto hasta que coge textura de helado.' },
     { t: 'Con el programa en marcha, empuja con el tamper hacia las cuchillas. Va en el hueco del tapón central, con la tapa puesta.' },
-    { t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
+    { vacia: true, t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ]
 },
 {
@@ -714,7 +714,7 @@ export const RECETAS: Receta[] = [
     { add: [0, 1, 2, 3, 4, 5], t: 'Introduce todos los ingredientes en la jarra, en el orden indicado.' },
     { b: 'DESSERT', t: 'Un minuto hasta que coge textura de helado.' },
     { t: 'Con el programa en marcha, empuja con el tamper hacia las cuchillas.' },
-    { t: 'Saca el sorbete de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
+    { vacia: true, t: 'Saca el sorbete de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ]
 },
 {
@@ -736,7 +736,7 @@ export const RECETAS: Receta[] = [
     { add: [2, 3, 4, 5], t: 'Introduce en la jarra los caramelos de menta, el azúcar glas, el extracto de menta, la leche entera y los cubitos de nata congelada.' },
     { b: 'DESSERT', t: 'Un minuto hasta que coge textura de helado.' },
     { t: 'Con el programa en marcha, empuja con el tamper hacia las cuchillas.' },
-    { t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
+    { vacia: true, t: 'Saca el helado de la jarra y mételo en el congelador al menos 15 minutos antes de servir.' }
   ],
   nota: 'Esta receta necesita 8 horas de congelación previa de la mezcla de nata y leche evaporada.'
 },

@@ -191,6 +191,23 @@ export default function Cocinar() {
             })()
           ) : null}
 
+          {/* qué hay dentro de la jarra ahora mismo */}
+          {paso.enJarra.length > 0 && (
+            <View style={[styles.jarra, { borderColor: c.separator, backgroundColor: c.cardAlt }]}>
+              <Text style={[styles.jarraTitulo, { color: c.muted }]} maxFontSizeMultiplier={1.4}>
+                EN LA JARRA AHORA
+              </Text>
+              <Text style={[styles.jarraLista, { color: c.textSoft }]}>
+                {paso.enJarra.join(' · ')}
+              </Text>
+              {paso.b && paso.continua && (
+                <Text style={[styles.jarraNota, { color: c.ok }]}>
+                  ✓ No saques nada: sigue todo dentro y la jarra no se mueve de la base.
+                </Text>
+              )}
+            </View>
+          )}
+
           {/* temporizador */}
           {minutos ? (
             <View style={styles.timerBlock}>
@@ -285,6 +302,10 @@ const styles = StyleSheet.create({
   sub: { fontSize: 13, lineHeight: 18 },
   aviso: { borderWidth: 1, borderRadius: 11, padding: 12, marginTop: 20 },
   avisoTxt: { fontSize: 14, lineHeight: 19, fontWeight: '500' },
+  jarra: { borderWidth: 1, borderRadius: 12, padding: 13, marginTop: 22, gap: 5 },
+  jarraTitulo: { fontFamily: FONT.mono, fontSize: 10.5, fontWeight: '700', letterSpacing: 1.2 },
+  jarraLista: { fontSize: 15, lineHeight: 21, fontWeight: '500' },
+  jarraNota: { fontSize: 13, lineHeight: 18, marginTop: 3, fontWeight: '600' },
   timerBlock: { marginTop: 24, gap: 8 },
   timerBtn: { flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center', borderWidth: 1.5, borderRadius: 12, paddingVertical: 14 },
   timerVivo: { borderRadius: 12, paddingVertical: 16, paddingHorizontal: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
