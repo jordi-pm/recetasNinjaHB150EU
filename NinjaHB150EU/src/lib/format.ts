@@ -201,7 +201,9 @@ export function ingredientesPrincipales(recetas: Receta[] = RECETAS): string[] {
 const ALERGENOS: [Alergeno, RegExp][] = [
   ['lacteos', /nata|leche(?! de (coco|almendra))|mantequilla|queso|parmesano|yogur|helado|crema agria|evaporada/],
   ['gluten', /fideos|pasta|macarron|pretzel|harina|pan|cerveza/],
-  ['frutos-secos', /anacardo|nuez|almendra|avellana|pistacho|cacahuete/],
+  // «nuez moscada» es una especia, no un fruto seco: un falso positivo aquí
+  // haría descartar una receta segura a quien sí tiene la alergia.
+  ['frutos-secos', /anacardo|nuez(?!\s*moscada)|almendra|avellana|pistacho|cacahuete/],
   ['huevo', /huevo|mayonesa|fideos de huevo/],
   ['alcohol', /tequila|triple seco|vino|ron|licor/],
   ['soja', /soja|tofu/],

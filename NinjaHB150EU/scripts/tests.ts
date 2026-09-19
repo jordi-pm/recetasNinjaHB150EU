@@ -270,3 +270,12 @@ test('la jarra configurable cambia lo que cabe', () => {
   assert.ok(maxEscala(r, 1400) >= 2, 'con jarra normal la fondue admite 2×');
   assert.equal(maxEscala(r, 700), 1, 'con una jarra pequeña ya no');
 });
+
+test('la nuez moscada no se confunde con un fruto seco', () => {
+  const r = RECETAS.find((x) => x.id === 'zanahoria')!;
+  assert.ok(!alergenosDe(r).includes('frutos-secos'), 'la nuez moscada es una especia');
+  assert.ok(alergenosDe(r).includes('lacteos'), 'pero sí lleva mantequilla y nata');
+  // y la detección real sigue funcionando
+  const cal = RECETAS.find((x) => x.id === 'calabaza')!;
+  assert.ok(alergenosDe(cal).includes('frutos-secos'), 'la crema de calabaza lleva anacardos');
+});
