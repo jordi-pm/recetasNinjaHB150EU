@@ -342,6 +342,204 @@ export const RECETAS: Receta[] = [
   discrepancia: 'Esta receta tiene dos cabos sueltos que preferimos dejar a la vista: el apio y la zanahoria están en la lista pero ningún paso dice cuándo entran, y el aceite del sofrito no lleva cantidad. Échale el aceite que te pida el sofrito y mete el apio y la zanahoria con el resto de la verdura.'
 },
 {
+  id: 'zanahoria', cat: 'sopas',
+  nombre: 'Crema de zanahoria',
+  raciones: 4, racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
+  principal: 'zanahoria', tags: ['vegetariana', 'suave'],
+  limiteMl: 1400,
+  ing: [
+    { c: 2, u: 'cda', n: 'mantequilla' },
+    { c: 1, u: 'cda', n: 'aceite de oliva' },
+    { c: 1, u: 'ud', n: 'cebolla pequeña, pelada y en cuartos' },
+    { c: 1, u: 'ud', n: 'puerro pequeño, solo la parte blanca, en trozos' },
+    { c: null, u: '', n: 'sal' },
+    { c: 400, u: 'g', n: 'zanahoria pelada, en trozos de 2,5 cm' },
+    { c: 1, u: 'ud', n: 'patata pequeña, pelada y en trozos de 2,5 cm' },
+    { c: 500, u: 'ml', n: 'caldo de verduras caliente' },
+    { c: 60, u: 'ml', n: 'nata para montar' },
+    { c: 0.25, u: 'cdta', n: 'nuez moscada recién rallada' },
+    { c: null, u: '', n: 'pimienta negra al gusto' }
+  ],
+  pasos: [
+    { add: [0, 1, 2, 3, 4], t: 'Mete la mantequilla, el aceite, la cebolla, el puerro y la sal.' },
+    { b: 'CHOP', t: 'Unos segundos de pulsos: queda picado, no hecho puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos pochando. Aquí es donde se juega el sabor de la crema: la cebolla tiene que ablandarse sin dorarse.' },
+    { add: [5], t: 'Añade la zanahoria sobre el sofrito.' },
+    { b: 'SAUTÉ', t: 'Otros cinco minutos. Rehogar la zanahoria antes del caldo le saca el dulzor: es el paso que casi todo el mundo se salta.' },
+    { add: [6, 7, 8, 9, 10], t: 'Ahora sí, la patata, el caldo, la nata, la nuez moscada y la pimienta.' },
+    { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando: sale ya como crema.' },
+    { vacia: true, t: 'Prueba de sal y sirve. Cuidado, la jarra está caliente.' }
+  ],
+  tip: 'La mantequilla da el sabor y el aceite evita que se queme. Juntos funcionan mejor que cualquiera de los dos por separado.',
+  nota: 'La patata está solo por la textura: es la que deja la crema aterciopelada en vez de acuosa. Si la quitas, gana sabor a zanahoria pero pierde cuerpo.'
+},
+{
+  id: 'calabacin', cat: 'sopas',
+  nombre: 'Crema de calabacín',
+  raciones: 4, racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
+  principal: 'calabacín', tags: ['vegetariana', 'suave'],
+  limiteMl: 1400,
+  ing: [
+    { c: 2, u: 'cda', n: 'aceite de oliva' },
+    { c: 1, u: 'ud', n: 'cebolla pequeña, pelada y en cuartos' },
+    { c: 1, u: 'diente', n: 'ajo, pelado' },
+    { c: null, u: '', n: 'sal' },
+    { c: 500, u: 'g', n: 'calabacín, sin pelar, en trozos de 2,5 cm' },
+    { c: 1, u: 'ud', n: 'patata mediana, pelada y en trozos de 2,5 cm' },
+    { c: 500, u: 'ml', n: 'caldo de verduras caliente' },
+    { c: 2, u: 'cda', n: 'queso crema (opcional)' },
+    { c: null, u: '', n: 'pimienta blanca al gusto' }
+  ],
+  pasos: [
+    { add: [0, 1, 2, 3] },
+    { b: 'CHOP', t: 'Unos segundos de pulsos y la cebolla queda picada, no hecha puré.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito. Aquí es donde la crema coge el sabor.' },
+    { add: [4, 5, 6, 7, 8], t: 'Añade el calabacín, la patata, el caldo y el queso.' },
+    { b: 'SMOOTH SOUP', t: 'Se calienta hasta que arranca a hervir, va removiendo sola y remata triturando.' },
+    { vacia: true, t: 'Sirve con un hilo de aceite por encima.' }
+  ],
+  tip: 'Deja la piel del calabacín: es la que le da ese verde bonito.'
+},
+{
+  id: 'pimiento-rojo', cat: 'sopas',
+  nombre: 'Crema de pimiento rojo y tomate',
+  raciones: 4, racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
+  principal: 'pimiento', tags: ['vegetariana', 'vegana', 'suave'],
+  limiteMl: 1400,
+  ing: [
+    { c: 2, u: 'cda', n: 'aceite de oliva' },
+    { c: 1, u: 'ud', n: 'cebolla pequeña, pelada y en cuartos' },
+    { c: 2, u: 'diente', n: 'ajo, pelados' },
+    { c: 1, u: 'cdta', n: 'orégano seco' },
+    { c: null, u: '', n: 'sal' },
+    { c: 2, u: 'ud', n: 'pimientos rojos, sin semillas, en trozos de 2,5 cm' },
+    { c: 400, u: 'g', n: 'tomate maduro en trozos' },
+    { c: 1, u: 'cda', n: 'concentrado de tomate' },
+    { c: 1, u: 'cdta', n: 'azúcar' },
+    { c: 450, u: 'ml', n: 'caldo de verduras caliente' },
+    { c: null, u: '', n: 'copos de chile al gusto' }
+  ],
+  pasos: [
+    { add: [0, 1, 2, 3, 4] },
+    { b: 'CHOP', t: 'Unos segundos de pulsos para dejar picados la cebolla y el ajo.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos de sofrito con el orégano.' },
+    { add: [5, 6, 7, 8, 9, 10], t: 'Añade el pimiento, el tomate, el concentrado, el azúcar y el caldo.' },
+    { b: 'SMOOTH SOUP', t: 'Cuece y tritura sin que tengas que hacer nada más.' },
+    { vacia: true, t: 'Prueba de sal y sirve.' }
+  ],
+  tip: 'La cucharadita de azúcar no la endulza: corta la acidez del tomate.'
+},
+{
+  id: 'esparragos', cat: 'sopas',
+  nombre: 'Crema de espárragos verdes',
+  raciones: 4, racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & SMOOTH SOUP',
+  principal: 'espárragos', tags: ['vegetariana', 'suave'],
+  limiteMl: 1400,
+  ing: [
+    { c: 2, u: 'cda', n: 'mantequilla' },
+    { c: 2, u: 'ud', n: 'chalotas, peladas' },
+    { c: null, u: '', n: 'sal' },
+    { c: 400, u: 'g', n: 'espárragos verdes, sin la parte leñosa, en trozos de 2,5 cm' },
+    { c: 1, u: 'ud', n: 'patata pequeña, pelada y en trozos de 2,5 cm' },
+    { c: 550, u: 'ml', n: 'caldo de verduras caliente' },
+    { c: 80, u: 'ml', n: 'nata para montar' },
+    { c: null, u: '', n: 'pimienta negra al gusto' }
+  ],
+  pasos: [
+    { add: [0, 1, 2] },
+    { b: 'CHOP', t: 'Pulsos cortos para picar las chalotas.' },
+    { b: 'SAUTÉ', t: 'Cinco minutos para que la mantequilla saque el dulzor de la chalota.' },
+    { add: [3, 4, 5, 6, 7], t: 'Añade los espárragos, la patata, el caldo y la nata.' },
+    { b: 'SMOOTH SOUP', t: 'Cuece y tritura hasta dejarla fina.' },
+    { vacia: true, t: 'Sirve. Quedan mejor con unas puntas de espárrago salteadas aparte por encima.' }
+  ],
+  nota: 'Guarda cuatro puntas antes de meterlo todo: salteadas en una sartén son la mejor guarnición de esta crema.'
+},
+{
+  id: 'smoothie-verde', cat: 'frias',
+  nombre: 'Smoothie verde',
+  raciones: 2, racionesNum: 2, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'SMOOTHIE',
+  principal: 'espinaca', tags: ['vegetariana', 'vegana', 'fria'],
+  limiteMl: 1600,
+  ing: [
+    { c: 60, u: 'g', n: 'espinaca baby fresca' },
+    { c: 1, u: 'ud', n: 'plátano, pelado' },
+    { c: 1, u: 'ud', n: 'manzana verde, sin corazón y en cuartos' },
+    { c: 1, u: 'ud', n: 'kiwi, pelado' },
+    { c: 1, u: 'cda', n: 'zumo de limón' },
+    { c: 250, u: 'ml', n: 'agua fría' },
+    { c: 100, u: 'g', n: 'cubitos de hielo' }
+  ],
+  pasos: [
+    { add: [6, 0, 1, 2, 3, 4, 5], t: 'Carga en este orden: primero el hielo, luego la verdura y la fruta, y el agua al final.' },
+    { b: 'SMOOTHIE', t: 'Menos de un minuto alternando pulsos y velocidad alta.' },
+    { vacia: true, t: 'Sirve al momento, antes de que se separe.' }
+  ],
+  tip: 'El orden importa: el hielo abajo crea el remolino que arrastra la hoja verde hacia las cuchillas.'
+},
+{
+  id: 'smoothie-tropical', cat: 'frias',
+  nombre: 'Smoothie tropical de mango y piña',
+  raciones: 2, racionesNum: 2, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'SMOOTHIE',
+  principal: 'mango', tags: ['vegetariana', 'vegana', 'fria'],
+  limiteMl: 1600,
+  ing: [
+    { c: 200, u: 'g', n: 'mango congelado en trozos' },
+    { c: 200, u: 'g', n: 'piña en trozos' },
+    { c: 1, u: 'ud', n: 'plátano, pelado' },
+    { c: 200, u: 'ml', n: 'zumo de naranja' },
+    { c: 100, u: 'ml', n: 'leche de coco' }
+  ],
+  pasos: [
+    { add: [0, 1, 2, 3, 4], t: 'Primero la fruta congelada, después la fresca y los líquidos al final.' },
+    { b: 'SMOOTHIE', t: 'Menos de un minuto y queda cremoso sin necesidad de hielo.' },
+    { vacia: true, t: 'Sirve.' }
+  ],
+  tip: 'Usar el mango congelado en vez de hielo es lo que hace que sepa a fruta y no a agua.'
+},
+{
+  id: 'smoothie-cacahuete', cat: 'frias',
+  nombre: 'Smoothie de plátano y cacahuete',
+  raciones: 2, racionesNum: 2, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'SMOOTHIE',
+  principal: 'plátano', tags: ['vegetariana', 'fria'],
+  limiteMl: 1600,
+  ing: [
+    { c: 2, u: 'ud', n: 'plátanos maduros, pelados' },
+    { c: 2, u: 'cda', n: 'crema de cacahuete suave' },
+    { c: 1, u: 'cda', n: 'semillas de chía' },
+    { c: 1, u: 'cdta', n: 'canela molida' },
+    { c: 300, u: 'ml', n: 'leche' },
+    { c: 150, u: 'g', n: 'cubitos de hielo' }
+  ],
+  pasos: [
+    { add: [5, 2, 3, 1, 0, 4], t: 'Hielo abajo, después la chía y la crema de cacahuete, luego el plátano y la leche al final.' },
+    { b: 'SMOOTHIE', t: 'Menos de un minuto hasta que quede espeso y sin grumos.' },
+    { vacia: true, t: 'Sirve. Si lo dejas reposar, la chía lo espesa aún más.' }
+  ],
+  tip: 'Si los plátanos están muy maduros no necesita nada de azúcar.'
+},
+{
+  id: 'smoothie-remolacha', cat: 'frias',
+  nombre: 'Smoothie de remolacha y manzana',
+  raciones: 2, racionesNum: 2, prep: 5, coccion: 1, dificultad: 'Fácil', programa: 'SMOOTHIE',
+  principal: 'remolacha', tags: ['vegetariana', 'vegana', 'fria'],
+  limiteMl: 1600,
+  ing: [
+    { c: 200, u: 'g', n: 'remolacha cocida, en trozos' },
+    { c: 1, u: 'ud', n: 'manzana, sin corazón y en cuartos' },
+    { c: 1, u: 'ud', n: 'zanahoria pequeña, pelada y en trozos' },
+    { c: 2, u: 'cdta', n: 'jengibre fresco rallado' },
+    { c: 2, u: 'cda', n: 'zumo de limón' },
+    { c: 300, u: 'ml', n: 'agua fría' }
+  ],
+  pasos: [
+    { add: [0, 1, 2, 3, 4, 5], t: 'Mete la remolacha y la zanahoria abajo, que son lo más duro, y el agua al final.' },
+    { b: 'SMOOTHIE', t: 'Menos de un minuto. La remolacha cocida se deshace sin problema.' },
+    { vacia: true, t: 'Sirve bien frío.' }
+  ],
+  nota: 'Usa remolacha ya cocida, de las envasadas al vacío. La cruda no se ablanda en un programa de smoothie.'
+},
+{
   id: 'plantilla-trozos', cat: 'sopas',
   nombre: 'Plantilla: sopa con trozos a tu gusto',
   raciones: '3-4', racionesNum: 4, prep: 10, coccion: 35, dificultad: 'Fácil', programa: 'PRE-COOK & CHUNKY SOUP',
