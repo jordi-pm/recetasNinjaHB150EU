@@ -2,7 +2,7 @@
   "expo": {
     "name": "Sopera",
     "slug": "sopera",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "sopera",
@@ -16,7 +16,7 @@
         "NSCameraUsageDescription": "Para que puedas hacer una foto de tus platos y verla en la receta. La foto se guarda solo en tu móvil.",
         "NSPhotoLibraryUsageDescription": "Para elegir una foto de tus platos y verla en la receta. La foto se guarda solo en tu móvil."
       },
-      "buildNumber": "5",
+      "buildNumber": "6",
       "config": {
         "usesNonExemptEncryption": false
       }
